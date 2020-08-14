@@ -10,19 +10,29 @@
 		323B702E24E6CEFA00108AB2 /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = 323B702D24E6CEFA00108AB2 /* RxRelay */; };
 		323B703024E6CEFA00108AB2 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 323B702F24E6CEFA00108AB2 /* RxSwift */; };
 		323B703224E6CEFA00108AB2 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 323B703124E6CEFA00108AB2 /* RxCocoa */; };
+		323B703724E6E33600108AB2 /* TimerMainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 323B703624E6E33600108AB2 /* TimerMainViewModel.swift */; };
+		323B703924E6E35C00108AB2 /* WorkoutSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 323B703824E6E35C00108AB2 /* WorkoutSettingsViewController.swift */; };
+		323B703B24E6E41A00108AB2 /* WorkoutSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 323B703A24E6E41A00108AB2 /* WorkoutSettingsViewModel.swift */; };
+		323B703E24E6E71300108AB2 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 323B703D24E6E71300108AB2 /* MainCoordinator.swift */; };
+		323B704024E6E82500108AB2 /* UIViewController+Storyboarded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 323B703F24E6E82500108AB2 /* UIViewController+Storyboarded.swift */; };
 		8BEF532124E6B4DF00220894 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BEF532024E6B4DF00220894 /* AppDelegate.swift */; };
 		8BEF532324E6B4DF00220894 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BEF532224E6B4DF00220894 /* SceneDelegate.swift */; };
-		8BEF532524E6B4DF00220894 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BEF532424E6B4DF00220894 /* ViewController.swift */; };
+		8BEF532524E6B4DF00220894 /* TimerMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BEF532424E6B4DF00220894 /* TimerMainViewController.swift */; };
 		8BEF532824E6B4DF00220894 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8BEF532624E6B4DF00220894 /* Main.storyboard */; };
 		8BEF532A24E6B4E100220894 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8BEF532924E6B4E100220894 /* Assets.xcassets */; };
 		8BEF532D24E6B4E100220894 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8BEF532B24E6B4E100220894 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		323B703624E6E33600108AB2 /* TimerMainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerMainViewModel.swift; sourceTree = "<group>"; };
+		323B703824E6E35C00108AB2 /* WorkoutSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutSettingsViewController.swift; sourceTree = "<group>"; };
+		323B703A24E6E41A00108AB2 /* WorkoutSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutSettingsViewModel.swift; sourceTree = "<group>"; };
+		323B703D24E6E71300108AB2 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
+		323B703F24E6E82500108AB2 /* UIViewController+Storyboarded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Storyboarded.swift"; sourceTree = "<group>"; };
 		8BEF531D24E6B4DF00220894 /* WorkoutTimer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WorkoutTimer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BEF532024E6B4DF00220894 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8BEF532224E6B4DF00220894 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		8BEF532424E6B4DF00220894 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		8BEF532424E6B4DF00220894 /* TimerMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerMainViewController.swift; sourceTree = "<group>"; };
 		8BEF532724E6B4DF00220894 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8BEF532924E6B4E100220894 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8BEF532C24E6B4E100220894 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -43,6 +53,42 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		323B703324E6E2B300108AB2 /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				323B703524E6E30E00108AB2 /* WorkoutSettingsScreen */,
+				323B703424E6E2FF00108AB2 /* MainScreen */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
+		323B703424E6E2FF00108AB2 /* MainScreen */ = {
+			isa = PBXGroup;
+			children = (
+				8BEF532424E6B4DF00220894 /* TimerMainViewController.swift */,
+				323B703624E6E33600108AB2 /* TimerMainViewModel.swift */,
+			);
+			path = MainScreen;
+			sourceTree = "<group>";
+		};
+		323B703524E6E30E00108AB2 /* WorkoutSettingsScreen */ = {
+			isa = PBXGroup;
+			children = (
+				323B703824E6E35C00108AB2 /* WorkoutSettingsViewController.swift */,
+				323B703A24E6E41A00108AB2 /* WorkoutSettingsViewModel.swift */,
+			);
+			path = WorkoutSettingsScreen;
+			sourceTree = "<group>";
+		};
+		323B703C24E6E44B00108AB2 /* AppCoordinator */ = {
+			isa = PBXGroup;
+			children = (
+				323B703D24E6E71300108AB2 /* MainCoordinator.swift */,
+				323B703F24E6E82500108AB2 /* UIViewController+Storyboarded.swift */,
+			);
+			path = AppCoordinator;
+			sourceTree = "<group>";
+		};
 		8BEF531424E6B4DF00220894 = {
 			isa = PBXGroup;
 			children = (
@@ -62,9 +108,10 @@
 		8BEF531F24E6B4DF00220894 /* WorkoutTimer */ = {
 			isa = PBXGroup;
 			children = (
+				323B703C24E6E44B00108AB2 /* AppCoordinator */,
+				323B703324E6E2B300108AB2 /* Screens */,
 				8BEF532024E6B4DF00220894 /* AppDelegate.swift */,
 				8BEF532224E6B4DF00220894 /* SceneDelegate.swift */,
-				8BEF532424E6B4DF00220894 /* ViewController.swift */,
 				8BEF532624E6B4DF00220894 /* Main.storyboard */,
 				8BEF532924E6B4E100220894 /* Assets.xcassets */,
 				8BEF532B24E6B4E100220894 /* LaunchScreen.storyboard */,
@@ -152,8 +199,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8BEF532524E6B4DF00220894 /* ViewController.swift in Sources */,
+				323B704024E6E82500108AB2 /* UIViewController+Storyboarded.swift in Sources */,
+				8BEF532524E6B4DF00220894 /* TimerMainViewController.swift in Sources */,
+				323B703E24E6E71300108AB2 /* MainCoordinator.swift in Sources */,
+				323B703724E6E33600108AB2 /* TimerMainViewModel.swift in Sources */,
 				8BEF532124E6B4DF00220894 /* AppDelegate.swift in Sources */,
+				323B703B24E6E41A00108AB2 /* WorkoutSettingsViewModel.swift in Sources */,
+				323B703924E6E35C00108AB2 /* WorkoutSettingsViewController.swift in Sources */,
 				8BEF532324E6B4DF00220894 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
