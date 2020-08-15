@@ -17,6 +17,5 @@ class TimerMainViewController: UIViewController, Storyboarded {
         view.backgroundColor = .yellow
     }
 
-
 }
 

@@ -25,13 +25,13 @@ class MainCoordinator: Coordinator {
     }
 
     func start() {
-        let timerMainViewController = TimerMainViewController.instantiate()
+        let timerMainViewController = WorkoutSettingsViewController.instantiate()
         timerMainViewController.coordinator = self
         navigationController.pushViewController(timerMainViewController, animated: true)
     }
 
-    func workoutSettingsViewControllerStart() {
-        let workoutSettingsViewController = WorkoutSettingsViewController.instantiate()
-        navigationController.pushViewController(workoutSettingsViewController, animated: true)
-    }
+//    func workoutSettingsViewControllerStart() {
+//        let workoutSettingsViewController = WorkoutSettingsViewController.instantiate()
+//        navigationController.pushViewController(workoutSettingsViewController, animated: true)
+//    }
 }

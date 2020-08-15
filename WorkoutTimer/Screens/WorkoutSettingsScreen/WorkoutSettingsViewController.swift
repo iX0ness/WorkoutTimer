@@ -10,8 +10,14 @@ import UIKit
 
 class WorkoutSettingsViewController: UIViewController, Storyboarded {
 
+    weak var coordinator: MainCoordinator?
+
+    @IBOutlet weak var testView: UIView!
+
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        testView.backgroundColor = UIColor(hexString: "BE2326")
     }
 
 }
