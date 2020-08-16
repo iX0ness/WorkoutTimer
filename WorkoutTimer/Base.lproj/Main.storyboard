@@ -20,7 +20,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="132" y="100"/>
+            <point key="canvasLocation" x="-365" y="131"/>
         </scene>
         <!--Workout Settings View Controller-->
         <scene sceneID="QTW-7k-1l2">
@@ -30,22 +30,48 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="v2m-74-C1r">
-                                <rect key="frame" x="20" y="602" width="374" height="111"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v2m-74-C1r">
+                                <rect key="frame" x="20" y="388" width="374" height="120"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="2:30" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Iq1-7z-h6t">
+                                        <rect key="frame" x="244" y="31" width="114" height="60"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="50"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Work" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Gz-3T-RB1">
+                                        <rect key="frame" x="16" y="46" width="61" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
                                 <color key="backgroundColor" red="0.91764705879999997" green="0.90980392160000001" blue="0.86274509799999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="120" id="eKu-ah-wIt"/>
+                                </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="v2m-74-C1r" firstAttribute="centerX" secondItem="8Xo-0E-e6G" secondAttribute="centerX" id="HdK-U3-Jxd"/>
+                            <constraint firstItem="v2m-74-C1r" firstAttribute="centerY" secondItem="8Xo-0E-e6G" secondAttribute="centerY" id="UHj-fA-rcN"/>
+                            <constraint firstItem="v2m-74-C1r" firstAttribute="leading" secondItem="WM0-S9-yoe" secondAttribute="leading" constant="20" id="o0b-Qg-P3K"/>
+                            <constraint firstItem="WM0-S9-yoe" firstAttribute="trailing" secondItem="v2m-74-C1r" secondAttribute="trailing" constant="20" id="p8d-0h-BQU"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="WM0-S9-yoe"/>
                     </view>
                     <connections>
                         <outlet property="testView" destination="v2m-74-C1r" id="qfr-LU-x2i"/>
+                        <outlet property="timeDescriptionLabel" destination="8Gz-3T-RB1" id="hBg-07-PCT"/>
+                        <outlet property="timeValueLabel" destination="Iq1-7z-h6t" id="cc9-Zs-X3N"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="C2G-X0-UXJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1060.8695652173915" y="99.776785714285708"/>
+            <point key="canvasLocation" x="558" y="131"/>
         </scene>
     </scenes>
 </document>

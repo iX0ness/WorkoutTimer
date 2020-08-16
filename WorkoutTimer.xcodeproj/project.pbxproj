@@ -22,6 +22,7 @@
 		8BEF532824E6B4DF00220894 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8BEF532624E6B4DF00220894 /* Main.storyboard */; };
 		8BEF532A24E6B4E100220894 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8BEF532924E6B4E100220894 /* Assets.xcassets */; };
 		8BEF532D24E6B4E100220894 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8BEF532B24E6B4E100220894 /* LaunchScreen.storyboard */; };
+		8BEF533524E8135300220894 /* ColorPalette.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BEF533424E8135300220894 /* ColorPalette.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +40,7 @@
 		8BEF532924E6B4E100220894 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8BEF532C24E6B4E100220894 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8BEF532E24E6B4E100220894 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8BEF533424E8135300220894 /* ColorPalette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPalette.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,6 +137,7 @@
 				8BEF532924E6B4E100220894 /* Assets.xcassets */,
 				8BEF532B24E6B4E100220894 /* LaunchScreen.storyboard */,
 				8BEF532E24E6B4E100220894 /* Info.plist */,
+				8BEF533424E8135300220894 /* ColorPalette.swift */,
 			);
 			path = WorkoutTimer;
 			sourceTree = "<group>";
@@ -223,6 +226,7 @@
 				8BEF532524E6B4DF00220894 /* TimerMainViewController.swift in Sources */,
 				323B703E24E6E71300108AB2 /* MainCoordinator.swift in Sources */,
 				323B703724E6E33600108AB2 /* TimerMainViewModel.swift in Sources */,
+				8BEF533524E8135300220894 /* ColorPalette.swift in Sources */,
 				8BEF532124E6B4DF00220894 /* AppDelegate.swift in Sources */,
 				323B703B24E6E41A00108AB2 /* WorkoutSettingsViewModel.swift in Sources */,
 				323B703924E6E35C00108AB2 /* WorkoutSettingsViewController.swift in Sources */,

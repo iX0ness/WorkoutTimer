@@ -13,11 +13,21 @@ class WorkoutSettingsViewController: UIViewController, Storyboarded {
     weak var coordinator: MainCoordinator?
 
     @IBOutlet weak var testView: UIView!
-
+    
+    @IBOutlet weak var timeValueLabel: UILabel!
+    @IBOutlet weak var timeDescriptionLabel: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        testView.backgroundColor = UIColor(hexString: "BE2326")
+        
+        
+        view.backgroundColor = ColorPalette.subsecondary.color
+        testView.backgroundColor = ColorPalette.secondary.color
+        timeValueLabel.textColor = ColorPalette.primary.color
+        timeDescriptionLabel.textColor = ColorPalette.primary.color
+        
+        testView.layer.cornerRadius = 10
+        testView.layer.masksToBounds = true
     }
 
 }
