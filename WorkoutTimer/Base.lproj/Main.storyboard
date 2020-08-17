@@ -30,48 +30,72 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v2m-74-C1r">
-                                <rect key="frame" x="20" y="388" width="374" height="120"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="4PD-9z-N4P">
+                                <rect key="frame" x="16" y="453" width="382" height="393"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="2:30" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Iq1-7z-h6t">
-                                        <rect key="frame" x="244" y="31" width="114" height="60"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="50"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Work" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Gz-3T-RB1">
-                                        <rect key="frame" x="16" y="46" width="61" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JZp-WF-Qhh" customClass="WorkoutItemView" customModule="WorkoutTimer" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="382" height="86.5"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="10"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="titleText" value="Work"/>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="valueText" value="1:00"/>
+                                        </userDefinedRuntimeAttributes>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wMF-ob-aGe" customClass="WorkoutItemView" customModule="WorkoutTimer" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="102.5" width="382" height="86"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="10"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="titleText" value="Rest"/>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="valueText" value="0:15"/>
+                                        </userDefinedRuntimeAttributes>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="waP-3l-yu1" customClass="WorkoutItemView" customModule="WorkoutTimer" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="204.5" width="382" height="86.5"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="10"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="titleText" value="Sets"/>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="valueText" value="10"/>
+                                        </userDefinedRuntimeAttributes>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zgj-2W-pWc" customClass="WorkoutItemView" customModule="WorkoutTimer" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="307" width="382" height="86"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="10"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="titleText" value="Rounds"/>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="valueText" value="2X"/>
+                                        </userDefinedRuntimeAttributes>
+                                    </view>
                                 </subviews>
-                                <color key="backgroundColor" red="0.91764705879999997" green="0.90980392160000001" blue="0.86274509799999999" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="120" id="eKu-ah-wIt"/>
-                                </constraints>
-                            </view>
+                            </stackView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="v2m-74-C1r" firstAttribute="centerX" secondItem="8Xo-0E-e6G" secondAttribute="centerX" id="HdK-U3-Jxd"/>
-                            <constraint firstItem="v2m-74-C1r" firstAttribute="centerY" secondItem="8Xo-0E-e6G" secondAttribute="centerY" id="UHj-fA-rcN"/>
-                            <constraint firstItem="v2m-74-C1r" firstAttribute="leading" secondItem="WM0-S9-yoe" secondAttribute="leading" constant="20" id="o0b-Qg-P3K"/>
-                            <constraint firstItem="WM0-S9-yoe" firstAttribute="trailing" secondItem="v2m-74-C1r" secondAttribute="trailing" constant="20" id="p8d-0h-BQU"/>
+                            <constraint firstItem="4PD-9z-N4P" firstAttribute="leading" secondItem="WM0-S9-yoe" secondAttribute="leading" constant="16" id="I1l-pp-r9e"/>
+                            <constraint firstItem="WM0-S9-yoe" firstAttribute="trailing" secondItem="4PD-9z-N4P" secondAttribute="trailing" constant="16" id="R8s-F7-sfS"/>
+                            <constraint firstItem="WM0-S9-yoe" firstAttribute="bottom" secondItem="4PD-9z-N4P" secondAttribute="bottom" constant="16" id="Z38-R1-Npb"/>
+                            <constraint firstItem="4PD-9z-N4P" firstAttribute="top" secondItem="WM0-S9-yoe" secondAttribute="centerY" id="hzz-4N-X8X"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="WM0-S9-yoe"/>
                     </view>
                     <connections>
-                        <outlet property="testView" destination="v2m-74-C1r" id="qfr-LU-x2i"/>
-                        <outlet property="timeDescriptionLabel" destination="8Gz-3T-RB1" id="hBg-07-PCT"/>
-                        <outlet property="timeValueLabel" destination="Iq1-7z-h6t" id="cc9-Zs-X3N"/>
+                        <outlet property="workConfigView" destination="JZp-WF-Qhh" id="zmU-M6-rp3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="C2G-X0-UXJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="558" y="131"/>
+            <point key="canvasLocation" x="556.52173913043487" y="130.58035714285714"/>
         </scene>
     </scenes>
 </document>
