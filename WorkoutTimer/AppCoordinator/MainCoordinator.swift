@@ -26,8 +26,16 @@ class MainCoordinator: Coordinator {
 
     func start() {
         let timerMainViewController = WorkoutSettingsViewController.instantiate()
+        timerMainViewController.callPopup = showPopup
         timerMainViewController.coordinator = self
         navigationController.pushViewController(timerMainViewController, animated: true)
+    }
+    
+    private func showPopup() -> TimeInputViewController {
+        let popupViewController = TimeInputViewController.instantiate()
+        popupViewController.modalPresentationStyle = .popover
+        popupViewController.modalTransitionStyle = .coverVertical
+        return popupViewController
     }
 
 //    func workoutSettingsViewControllerStart() {

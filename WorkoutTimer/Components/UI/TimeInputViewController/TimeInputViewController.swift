@@ -8,17 +8,28 @@
 
 import UIKit
 
-class TimeInputViewController: UIViewController {
+class TimeInputViewController: UIViewController, Storyboarded {
 
     @IBOutlet weak var dismissButton: UIButton!
     
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+       
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
     }
     
     override func viewWillLayoutSubviews() {
-        setupDismissButton()
+        
         setupViewShape()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        view.frame = CGRect(x: view.frame.midX - 100, y: view.frame.midY - 75, width: 200, height: 150)
     }
     
 }
@@ -26,9 +37,9 @@ class TimeInputViewController: UIViewController {
 // MARK: - UI Settings
 
 private extension TimeInputViewController {
-    func setupDismissButton() {
-        dismissButton.backgroundColor = ColorPalette.secondary.color
-    }
+//    func setupDismissButton() {
+//        dismissButton.backgroundColor = ColorPalette.secondary.color
+//    }
     
     func setupViewShape() {
         view.layer.cornerRadius = 10
