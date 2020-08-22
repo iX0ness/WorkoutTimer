@@ -19,6 +19,9 @@ enum ColorPalette {
     case subsecondary
     /// Coldwhite shade
     case header
+    /// Gray shade
+    case placeholder
+    
     
     var color: UIColor {
         switch self {
@@ -27,6 +30,7 @@ enum ColorPalette {
         case .subprimary: return UIColor(hexString: "F4F2EC")
         case .subsecondary: return UIColor(hexString: "#FB5D61")
         case .header: return UIColor(hexString: "#F1F1F3")
+        case .placeholder: return UIColor(hexString: "#E8E8E8")
         }
     }
 }

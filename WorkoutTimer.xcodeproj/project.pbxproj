@@ -17,6 +17,10 @@
 		323B704024E6E82500108AB2 /* UIViewController+Storyboarded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 323B703F24E6E82500108AB2 /* UIViewController+Storyboarded.swift */; };
 		3268BD6C24E7F6DF00DD4FA9 /* UIColor+HEX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3268BD6B24E7F6DF00DD4FA9 /* UIColor+HEX.swift */; };
 		8B78CD4524EC46E400C819E2 /* UIScreen+Dimension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B78CD4424EC46E400C819E2 /* UIScreen+Dimension.swift */; };
+		8B80EF5024F04946009FDB9D /* WorkoutConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B80EF4F24F04946009FDB9D /* WorkoutConfiguration.swift */; };
+		8B80EF5324F054D0009FDB9D /* Unit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B80EF5224F054D0009FDB9D /* Unit.swift */; };
+		8B80EF5724F05845009FDB9D /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B80EF5624F05845009FDB9D /* Time.swift */; };
+		8B8B269424F16F9600528D6B /* InputConfigurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B8B269324F16F9600528D6B /* InputConfigurable.swift */; };
 		8BC52BC924EAF7CE00181B81 /* WorkoutItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC52BC824EAF7CE00181B81 /* WorkoutItemView.swift */; };
 		8BE1CEAE24EDB84200D9A354 /* TimeInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1CEAD24EDB84200D9A354 /* TimeInputViewController.swift */; };
 		8BEF532124E6B4DF00220894 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BEF532024E6B4DF00220894 /* AppDelegate.swift */; };
@@ -36,6 +40,10 @@
 		323B703F24E6E82500108AB2 /* UIViewController+Storyboarded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Storyboarded.swift"; sourceTree = "<group>"; };
 		3268BD6B24E7F6DF00DD4FA9 /* UIColor+HEX.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+HEX.swift"; sourceTree = "<group>"; };
 		8B78CD4424EC46E400C819E2 /* UIScreen+Dimension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScreen+Dimension.swift"; sourceTree = "<group>"; };
+		8B80EF4F24F04946009FDB9D /* WorkoutConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutConfiguration.swift; sourceTree = "<group>"; };
+		8B80EF5224F054D0009FDB9D /* Unit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Unit.swift; sourceTree = "<group>"; };
+		8B80EF5624F05845009FDB9D /* Time.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Time.swift; sourceTree = "<group>"; };
+		8B8B269324F16F9600528D6B /* InputConfigurable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputConfigurable.swift; sourceTree = "<group>"; };
 		8BC52BC824EAF7CE00181B81 /* WorkoutItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutItemView.swift; sourceTree = "<group>"; };
 		8BE1CEAD24EDB84200D9A354 /* TimeInputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeInputViewController.swift; sourceTree = "<group>"; };
 		8BEF531D24E6B4DF00220894 /* WorkoutTimer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WorkoutTimer.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -84,6 +92,7 @@
 		323B703524E6E30E00108AB2 /* WorkoutSettingsScreen */ = {
 			isa = PBXGroup;
 			children = (
+				8B80EF4E24F04932009FDB9D /* Model */,
 				8BC52BC624EAF77500181B81 /* ViewModel */,
 				8BC52BC524EAF76800181B81 /* Controller */,
 			);
@@ -115,6 +124,24 @@
 				8B78CD4424EC46E400C819E2 /* UIScreen+Dimension.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		8B80EF4E24F04932009FDB9D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				8B80EF5124F053ED009FDB9D /* PropertyWrappers */,
+				8B80EF4F24F04946009FDB9D /* WorkoutConfiguration.swift */,
+				8B80EF5624F05845009FDB9D /* Time.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		8B80EF5124F053ED009FDB9D /* PropertyWrappers */ = {
+			isa = PBXGroup;
+			children = (
+				8B80EF5224F054D0009FDB9D /* Unit.swift */,
+			);
+			path = PropertyWrappers;
 			sourceTree = "<group>";
 		};
 		8BBCCEB824EDABB500177492 /* Components */ = {
@@ -154,6 +181,7 @@
 			isa = PBXGroup;
 			children = (
 				8BE1CEAD24EDB84200D9A354 /* TimeInputViewController.swift */,
+				8B8B269324F16F9600528D6B /* InputConfigurable.swift */,
 			);
 			path = TimeInputViewController;
 			sourceTree = "<group>";
@@ -275,13 +303,17 @@
 				8B78CD4524EC46E400C819E2 /* UIScreen+Dimension.swift in Sources */,
 				8BE1CEAE24EDB84200D9A354 /* TimeInputViewController.swift in Sources */,
 				8BEF532524E6B4DF00220894 /* TimerMainViewController.swift in Sources */,
+				8B80EF5724F05845009FDB9D /* Time.swift in Sources */,
 				323B703E24E6E71300108AB2 /* MainCoordinator.swift in Sources */,
+				8B80EF5024F04946009FDB9D /* WorkoutConfiguration.swift in Sources */,
+				8B80EF5324F054D0009FDB9D /* Unit.swift in Sources */,
 				323B703724E6E33600108AB2 /* TimerMainViewModel.swift in Sources */,
 				8BC52BC924EAF7CE00181B81 /* WorkoutItemView.swift in Sources */,
 				8BEF533524E8135300220894 /* ColorPalette.swift in Sources */,
 				8BEF532124E6B4DF00220894 /* AppDelegate.swift in Sources */,
 				323B703B24E6E41A00108AB2 /* WorkoutSettingsViewModel.swift in Sources */,
 				323B703924E6E35C00108AB2 /* WorkoutSettingsViewController.swift in Sources */,
+				8B8B269424F16F9600528D6B /* InputConfigurable.swift in Sources */,
 				8BEF532324E6B4DF00220894 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

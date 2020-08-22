@@ -26,10 +26,6 @@ class WorkoutSettingsViewController: UIViewController, Storyboarded {
     @IBOutlet weak var totalWorkoutTimeLabel: UILabel!
     @IBOutlet weak var startWorkoutButton: UIButton!
     
-    
-    
-    var callPopup: (() -> TimeInputViewController)?
-    
     // MARK: - Object Lifecycle
     
     override func viewDidLoad() {
@@ -51,26 +47,31 @@ class WorkoutSettingsViewController: UIViewController, Storyboarded {
         activateStartWorkoutButtonConstraints()
     }
     
+    @IBAction func tapGestureWorkoutConfigView(_ sender: Any) {
+        showPopup(inputType: .double)
+    }
+    @IBAction func tapGestureRestConfigView(_ sender: Any) {
+        showPopup(inputType: .double)
+    }
     
+    @IBAction func tapGestureSetsConfigView(_ sender: Any) {
+        showPopup(inputType: .single(primaryPlaceholder: "1", priparyDescription: "sets"))
+    }
     
-    @IBAction func action(_ sender: Any) {
-        guard let popupViewController = callPopup?() else { return }
-        popupViewController.view.frame = view.frame
-        present(popupViewController, animated: true, completion: nil)
+    @IBAction func tapGestureRoundsConfigView(_ sender: Any) {
+        showPopup(inputType: .single(primaryPlaceholder: "1", priparyDescription: "rounds"))
     }
     
     
-   
-    
+    private func showPopup(inputType: InputType) {
+        guard let popupViewController = coordinator?.showInputPopup(inputType) else { return }
+        present(popupViewController, animated: true, completion: nil)
+    }
 }
 
 // MARK: - UI Settings
 
 private extension WorkoutSettingsViewController {
-    
-    func addGestureRecognizer() {
-        
-    }
     
     func setupTotalWorkoutView() {
         totalWorkoutTimeView.backgroundColor = ColorPalette.subprimary.color
