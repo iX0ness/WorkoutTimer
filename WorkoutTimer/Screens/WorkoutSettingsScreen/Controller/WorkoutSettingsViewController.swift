@@ -65,6 +65,7 @@ class WorkoutSettingsViewController: UIViewController, Storyboarded {
     
     private func showPopup(inputType: InputType) {
         guard let popupViewController = coordinator?.showInputPopup(inputType) else { return }
+        
         present(popupViewController, animated: true, completion: nil)
     }
 }
@@ -86,7 +87,6 @@ private extension WorkoutSettingsViewController {
         let bottomAnchorConstant = UIScreen.valueForHeight(x568: -16, x667: nil, x736: nil, x812: nil, x896: nil)
         
         startWorkoutButton.layer.cornerRadius = buttonSide / 2
-        
         startWorkoutButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([

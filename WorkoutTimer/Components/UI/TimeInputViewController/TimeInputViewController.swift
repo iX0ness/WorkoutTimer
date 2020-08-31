@@ -8,13 +8,7 @@
 
 import UIKit
 
-
-
 class TimeInputViewController: UIViewController, Storyboarded, InputConfigurable {
-    
-    
-    
-    
     
     // MARK: - IB Outlets
     
@@ -32,7 +26,7 @@ class TimeInputViewController: UIViewController, Storyboarded, InputConfigurable
         let stackView = UIStackView()
         stackView.axis = .horizontal
         stackView.distribution = .fill
-        stackView.alignment = .center
+        stackView.alignment = .fill
         stackView.spacing = UIStackView.spacingUseSystem
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
@@ -46,7 +40,7 @@ class TimeInputViewController: UIViewController, Storyboarded, InputConfigurable
             primaryDescriptionLabel,
         ])
         stackView.axis = .vertical
-        stackView.alignment = .center
+        stackView.alignment = .fill
         stackView.distribution = .fill
         return stackView
     }()
@@ -69,7 +63,7 @@ class TimeInputViewController: UIViewController, Storyboarded, InputConfigurable
             secondaryDescriptionLabel,
         ])
         stackView.axis = .vertical
-        stackView.alignment = .center
+        stackView.alignment = .fill
         stackView.distribution = .fill
         return stackView
     }()
@@ -93,6 +87,10 @@ class TimeInputViewController: UIViewController, Storyboarded, InputConfigurable
     required init?(coder: NSCoder) {
         self.inputType = .double
         super.init(coder: coder)
+    }
+    
+    deinit {
+        print("Deinitialized")
     }
     
     override func viewDidLoad() {
@@ -124,19 +122,4 @@ private extension TimeInputViewController {
         containerView.layer.cornerRadius = 10
         containerView.clipsToBounds = true
     }
-    
-    //    func setupTextFields() {
-    //        minutesTextField.backgroundColor = .white
-    //        secondsTextField.backgroundColor = .white
-    //        minutesTextField.attributedPlaceholder = NSAttributedString(
-    //            string: "00",
-    //            attributes: [NSAttributedString.Key.foregroundColor: ColorPalette.placeholder.color])
-    //        secondsTextField.attributedPlaceholder = NSAttributedString(
-    //            string: "00",
-    //            attributes: [NSAttributedString.Key.foregroundColor: ColorPalette.placeholder.color])
-    //        minutesTextField.textColor = .gray
-    //        secondsTextField.textColor = .gray
-    //    }
-    
-    
 }

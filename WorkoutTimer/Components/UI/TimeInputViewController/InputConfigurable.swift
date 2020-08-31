@@ -28,36 +28,36 @@ extension InputConfigurable where Self: TimeInputViewController {
         case .double:
             configureTextFields()
             configureDescriptionLabels()
-            
-            
         }
     }
     
     private func configureTextFields(primaryPlaceholder: String = "00", secondaryPlaceholder: String = "00") {
+        primaryTextField.keyboardType = .numberPad
         primaryTextField.textAlignment = .center
         primaryTextField.backgroundColor = .white
+        primaryTextField.textColor = .lightGray
         primaryTextField.attributedPlaceholder = NSAttributedString(
             string: primaryPlaceholder,
             attributes: [NSAttributedString.Key.foregroundColor : ColorPalette.placeholder.color]
         )
-        
+        secondaryTextField.keyboardType = .numberPad
         secondaryTextField.textAlignment = .center
         secondaryTextField.backgroundColor = .white
+        secondaryTextField.textColor = .lightGray
         secondaryTextField.attributedPlaceholder = NSAttributedString(
             string: secondaryPlaceholder,
             attributes: [NSAttributedString.Key.foregroundColor : ColorPalette.placeholder.color]
         )
-        
     }
     
     private func configureDescriptionLabels(primaryLabelText: String = "minutes", secondaryLabelText: String = "seconds") {
         primaryDescriptionLabel.text = primaryLabelText
         primaryDescriptionLabel.textColor = ColorPalette.primary.color
-        primaryDescriptionLabel.font = UIFont(name: "AvenirNextCondensed-Regular", size: 17)
+        primaryDescriptionLabel.font = UIFont(name: "AvenirNext-Medium ", size: 17)
         
         secondaryDescriptionLabel.text = secondaryLabelText
         secondaryDescriptionLabel.textColor = ColorPalette.primary.color
-        secondaryDescriptionLabel.font = UIFont(name: "AvenirNextCondensed-Regular", size: 17)
+        secondaryDescriptionLabel.font = UIFont(name: "AvenirNext-Medium ", size: 17)
         
     }
     
@@ -76,10 +76,6 @@ extension InputConfigurable where Self: TimeInputViewController {
         NSLayoutConstraint.activate([
             mainInputStackView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
             mainInputStackView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
-            
         ])
     }
-    
-    
-    
 }
