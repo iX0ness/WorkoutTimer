@@ -7,12 +7,17 @@
 //
 
 import UIKit
+import RxSwift
 
 class WorkoutSettingsViewController: UIViewController, Storyboarded {
     
     // MARK: - Stored properties
     
     weak var coordinator: MainCoordinator?
+    var viewModel: WorkoutSettingsViewModel?
+    weak var popup: TimeInputViewController?
+    
+    let disposeBag = DisposeBag()
     
     // MARK: - IB Outlets
     
@@ -31,6 +36,7 @@ class WorkoutSettingsViewController: UIViewController, Storyboarded {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
+        bindWorkoutTime()
     }
     
     // MARK: - IB Actions
@@ -49,6 +55,9 @@ class WorkoutSettingsViewController: UIViewController, Storyboarded {
     
     @IBAction func tapGestureWorkoutConfigView(_ sender: Any) {
         showPopup(inputType: .double)
+        guard let popupVC = popup else { return }
+        handleWorkoutTimeInput(of: popupVC)
+        
     }
     @IBAction func tapGestureRestConfigView(_ sender: Any) {
         showPopup(inputType: .double)
@@ -65,8 +74,9 @@ class WorkoutSettingsViewController: UIViewController, Storyboarded {
     
     private func showPopup(inputType: InputType) {
         guard let popupViewController = coordinator?.showInputPopup(inputType) else { return }
-        
+        popup = popupViewController
         present(popupViewController, animated: true, completion: nil)
+        
     }
 }
 
@@ -95,5 +105,29 @@ private extension WorkoutSettingsViewController {
             startWorkoutButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             startWorkoutButton.bottomAnchor.constraint(equalTo: workoutConfigStackView.topAnchor, constant: bottomAnchorConstant)
         ])
+    }
+}
+
+extension WorkoutSettingsViewController {
+    func handleWorkoutTimeInput(of popup: TimeInputViewController) {
+        popup.confirmButton.rx.tap.subscribe { [weak self] event in
+            
+            
+        }.disposed(by: disposeBag)
+    }
+    
+    private func getObservableTime(for popup: TimeInputViewController) -> Observable<Time>? {
+        guard
+            let minutesValue = popup.primaryTextField.text,
+            let minutes = Int(minutesValue) else { return nil }
+        
+        guard
+            let secondsValue = popup.secondaryTextField.text,
+            let seconds = Int(secondsValue) else { return  nil }
+        
+        var time = Time()
+        time.minutes = Int(minutes)
+        time.seconds = Int(seconds)
+        return Observable.just(time)
     }
 }

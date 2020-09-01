@@ -140,7 +140,6 @@
                                                 <real key="value" value="10"/>
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="string" keyPath="titleText" value="Work"/>
-                                            <userDefinedRuntimeAttribute type="string" keyPath="valueText" value="1:00"/>
                                         </userDefinedRuntimeAttributes>
                                         <connections>
                                             <outletCollection property="gestureRecognizers" destination="o1w-gJ-R4y" appends="YES" id="nlI-p4-CaB"/>

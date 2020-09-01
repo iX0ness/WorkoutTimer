@@ -7,8 +7,10 @@
 //
 
 import UIKit
+import RxCocoa
+import RxSwift
 
-class TimeInputViewController: UIViewController, Storyboarded, InputConfigurable {
+class TimeInputViewController: UIViewController, Storyboarded, InputConfigurable, UITextFieldDelegate {
     
     // MARK: - IB Outlets
     
@@ -47,6 +49,7 @@ class TimeInputViewController: UIViewController, Storyboarded, InputConfigurable
     
     lazy var primaryTextField: UITextField = {
         let textField = UITextField()
+        textField.delegate = self
         return textField
     }()
     
@@ -102,15 +105,15 @@ class TimeInputViewController: UIViewController, Storyboarded, InputConfigurable
     // MARK: - IB Actions
     
     @IBAction func dismissButtonAction(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
+        dismiss(animated: true)
     }
     
     @IBAction func confirmButtonAction(_ sender: Any) {
-        
+        dismiss(animated: true)
     }
     
     @IBAction func dismissGestureAction(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
+        dismiss(animated: true)
     }
     
 }

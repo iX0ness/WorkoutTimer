@@ -7,7 +7,12 @@
 //
 
 import Foundation
+import RxSwift
 
 class WorkoutSettingsViewModel {
+    var workoutTime = BehaviorSubject(value: Time())
+    
+    init() { }
+    
     
 }

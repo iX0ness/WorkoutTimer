@@ -27,6 +27,7 @@ class MainCoordinator: Coordinator {
     func start() {
         let timerMainViewController = WorkoutSettingsViewController.instantiate()
         timerMainViewController.coordinator = self
+        timerMainViewController.viewModel = WorkoutSettingsViewModel()
         navigationController.pushViewController(timerMainViewController, animated: true)
     }
     
