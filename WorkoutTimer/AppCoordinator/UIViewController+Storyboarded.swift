@@ -29,7 +29,7 @@ extension Storyboarded where Self: UIViewController {
 }
 
 extension Storyboarded where Self: TimeInputViewController {
-    static func instantiate(for inutType: InputType) -> Self {
+    static func instantiate(title: String, for inutType: InputType, with parameter: InputParameter) -> Self {
         // this pulls out "MyApp.MyViewController"
         let fullName = NSStringFromClass(self)
 
@@ -39,7 +39,9 @@ extension Storyboarded where Self: TimeInputViewController {
         // load our storyboard
         let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
         let inputController = storyboard.instantiateViewController(withIdentifier: className) as! Self
+        inputController.popupTitle = title
         inputController.inputType = inutType
+        inputController.inputParameter = parameter
         // instantiate a view controller with that identifier, and force cast as the type that was requested
         return inputController
     }

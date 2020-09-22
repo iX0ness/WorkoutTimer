@@ -116,7 +116,7 @@ private extension WorkoutItemView {
         enum ItemValueLabel {
             static let paddingLeading: CGFloat = 16
             static let paddingTrailing: CGFloat = -8
-            static let fontSize: CGFloat = 50
+            static let fontSize: CGFloat = 30
         }
     }
 }

@@ -12,9 +12,9 @@ struct WorkoutConfiguration {
     let workoutTime: Time
     let restTime: Time
     
-    @Unit(initialValue: 0, 0...99)
+    @Unit(initialValue: 1, 1...99)
     var sets: Int
     
-    @Unit(initialValue: 0, 0...99)
+    @Unit(initialValue: 1, 1...99)
     var rounds: Int
 }

@@ -31,8 +31,8 @@ class MainCoordinator: Coordinator {
         navigationController.pushViewController(timerMainViewController, animated: true)
     }
     
-    func showInputPopup(_ inputType: InputType) -> TimeInputViewController {
-        let popupViewController = TimeInputViewController.instantiate(for: inputType)
+    func showInputPopup(_ title: String, _ inputType: InputType, _ inputParameter: InputParameter) -> TimeInputViewController {
+        let popupViewController = TimeInputViewController.instantiate(title: title, for: inputType, with: inputParameter)
         popupViewController.modalPresentationStyle = .popover
         popupViewController.modalTransitionStyle = .coverVertical
         return popupViewController

@@ -15,7 +15,7 @@ class WorkoutSettingsViewController: UIViewController, Storyboarded {
     
     weak var coordinator: MainCoordinator?
     var viewModel: WorkoutSettingsViewModel?
-    weak var popup: TimeInputViewController?
+    
     
     let disposeBag = DisposeBag()
     
@@ -36,7 +36,8 @@ class WorkoutSettingsViewController: UIViewController, Storyboarded {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
-        bindWorkoutTime()
+        observeWorkoutConfiguration()
+        
     }
     
     // MARK: - IB Actions
@@ -53,30 +54,47 @@ class WorkoutSettingsViewController: UIViewController, Storyboarded {
         activateStartWorkoutButtonConstraints()
     }
     
-    @IBAction func tapGestureWorkoutConfigView(_ sender: Any) {
-        showPopup(inputType: .double)
-        guard let popupVC = popup else { return }
-        handleWorkoutTimeInput(of: popupVC)
+    @IBAction func tapGestureWorkoutConfigView(_ sender: UITapGestureRecognizer) {
+        guard let popup = showPopup(
+            title: "Enter time",
+            inputType: .double,
+            inputParameter: .workoutTime
+        ) else { return }
+        handleInput(of: popup)
+    }
+    @IBAction func tapGestureRestConfigView(_ sender: UITapGestureRecognizer) {
+        guard let popup = showPopup(
+                title: "Enter time",
+                inputType: .double,
+                inputParameter: .restTime)
+        else { return }
+        handleInput(of: popup)
         
     }
-    @IBAction func tapGestureRestConfigView(_ sender: Any) {
-        showPopup(inputType: .double)
+    
+    @IBAction func tapGestureSetsConfigView(_ sender: UITapGestureRecognizer) {
+        guard let popup = showPopup(
+                title: "Enter sets",
+                inputType: .single(primaryPlaceholder: "1",
+                                   priparyDescription: "sets"),
+                inputParameter: .sets) else { return }
+        handleInput(of: popup)
     }
     
-    @IBAction func tapGestureSetsConfigView(_ sender: Any) {
-        showPopup(inputType: .single(primaryPlaceholder: "1", priparyDescription: "sets"))
+    @IBAction func tapGestureRoundsConfigView(_ sender: UITapGestureRecognizer) {
+        guard let popup = showPopup(
+                title: "Enter rounds",
+                inputType: .single(primaryPlaceholder: "1",
+                                   priparyDescription: "rounds"),
+                inputParameter: .rounds) else { return }
+        handleInput(of: popup)
     }
     
-    @IBAction func tapGestureRoundsConfigView(_ sender: Any) {
-        showPopup(inputType: .single(primaryPlaceholder: "1", priparyDescription: "rounds"))
-    }
     
-    
-    private func showPopup(inputType: InputType) {
-        guard let popupViewController = coordinator?.showInputPopup(inputType) else { return }
-        popup = popupViewController
+    private func showPopup(title: String, inputType: InputType, inputParameter: InputParameter) -> TimeInputViewController? {
+        guard let popupViewController = coordinator?.showInputPopup(title, inputType, inputParameter) else { return nil }
         present(popupViewController, animated: true, completion: nil)
-        
+        return popupViewController
     }
 }
 
@@ -88,7 +106,6 @@ private extension WorkoutSettingsViewController {
         totalWorkoutTimeView.backgroundColor = ColorPalette.subprimary.color
         totalWorkoutTimeView.clipsToBounds = true
         totalWorkoutTimeView.layer.cornerRadius = 10
-        
         totalWorkoutTimeLabel.textColor = ColorPalette.primary.color
     }
     
@@ -109,25 +126,57 @@ private extension WorkoutSettingsViewController {
 }
 
 extension WorkoutSettingsViewController {
-    func handleWorkoutTimeInput(of popup: TimeInputViewController) {
-        popup.confirmButton.rx.tap.subscribe { [weak self] event in
-            
+    func handleInput(of popup: TimeInputViewController) {
+        popup.confirmButton.rx.tap.bind { [weak popup] in
+            guard let popup = popup else { return }
+            switch popup.inputParameter {
+            case .workoutTime:
+                self.viewModel?.inputs.setWorkoutTime(popup.primaryTextFiedInput, popup.secondaryTextFiedInput)
+            case .restTime:
+                self.viewModel?.inputs.setRestTime(popup.primaryTextFiedInput, popup.secondaryTextFiedInput)
+            case .sets:
+                self.viewModel?.inputs.setSetsNumber(popup.primaryTextFiedInput)
+            case .rounds:
+                self.viewModel?.inputs.setRoundsNumber(popup.primaryTextFiedInput)
+            }
             
         }.disposed(by: disposeBag)
     }
     
-    private func getObservableTime(for popup: TimeInputViewController) -> Observable<Time>? {
-        guard
-            let minutesValue = popup.primaryTextField.text,
-            let minutes = Int(minutesValue) else { return nil }
+    func observeWorkoutConfiguration() {
+        viewModel?.roundTime
+            .map(toTimeString(_:))
+            .subscribe(onNext: { [weak self] time in
+                self?.workConfigView.valueText = time
+            }).disposed(by: disposeBag)
         
-        guard
-            let secondsValue = popup.secondaryTextField.text,
-            let seconds = Int(secondsValue) else { return  nil }
+        viewModel?.restTime
+            .map(toTimeString(_:))
+            .subscribe(onNext: { [weak self] time in
+                self?.restConfigView.valueText = time
+            }).disposed(by: disposeBag)
         
-        var time = Time()
-        time.minutes = Int(minutes)
-        time.seconds = Int(seconds)
-        return Observable.just(time)
+        viewModel?.sets
+            .subscribe(onNext: { [weak self] sets in
+                self?.setsConfigView.valueText = String(sets)
+            }).disposed(by: disposeBag)
+        
+        viewModel?.rounds
+            .subscribe(onNext: { [weak self] rounds in
+                self?.roundsConfigView.valueText = String(rounds)
+            }).disposed(by: disposeBag)
+        
+    }
+    
+    func toTimeString(_ interval: TimeInterval) -> String {
+        let formatter = DateComponentsFormatter()
+        if interval > 3599 {
+            formatter.allowedUnits = [.hour, .minute, .second]
+        } else {
+            formatter.allowedUnits = [.minute, .second]
+        }
+        formatter.unitsStyle = .positional
+        formatter.zeroFormattingBehavior = .pad
+        return formatter.string(from: interval)!
     }
 }

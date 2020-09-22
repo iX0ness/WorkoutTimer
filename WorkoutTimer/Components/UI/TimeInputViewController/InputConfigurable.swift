@@ -8,6 +8,13 @@
 
 import UIKit
 
+enum InputParameter {
+    case workoutTime
+    case restTime
+    case sets
+    case rounds
+}
+
 enum InputType {
     case single(primaryPlaceholder: String, priparyDescription: String)
     case double
