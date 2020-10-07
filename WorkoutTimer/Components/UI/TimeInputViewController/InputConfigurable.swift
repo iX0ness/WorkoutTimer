@@ -12,7 +12,7 @@ enum InputParameter {
     case workoutTime
     case restTime
     case sets
-    case rounds
+    case laps
 }
 
 enum InputType {

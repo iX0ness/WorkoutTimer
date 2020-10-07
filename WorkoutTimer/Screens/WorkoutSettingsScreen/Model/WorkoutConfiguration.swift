@@ -16,5 +16,5 @@ struct WorkoutConfiguration {
     var sets: Int
     
     @Unit(initialValue: 1, 1...99)
-    var rounds: Int
+    var laps: Int
 }

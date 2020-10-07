@@ -16,68 +16,101 @@ protocol WorkoutSettingsViewModelType {
 protocol WorkoutSettingsViewModelInputs {
     func setWorkoutTime(_ minutes: Int, _ seconds: Int)
     func setRestTime(_ minutes: Int, _ seconds: Int)
-    func setSetsNumber(_ sets: Int)
-    func setRoundsNumber(_ rounds: Int)
+    func setSets(_ count: Int)
+    func setLaps(_ count: Int)
 }
 protocol WorkoutSettingsViewModelOutputs {
-    var roundTime: BehaviorSubject<TimeInterval> { get }
-    var restTime: BehaviorSubject<TimeInterval> { get }
+    var roundTime: BehaviorSubject<String> { get }
+    var restTime: BehaviorSubject<String> { get }
+    var sets: BehaviorSubject<String> { get }
+    var laps: BehaviorSubject<String> { get }
+    var totalWorkoutTime: BehaviorSubject<String> { get }
 }
 
 class WorkoutSettingsViewModel: WorkoutSettingsViewModelType, WorkoutSettingsViewModelInputs, WorkoutSettingsViewModelOutputs {
     
     // MARK: - Object Properties
     
-    private var _roundTime: Double = 0
-    private var _restTime: Double = 0
-    private var _sets: Int = 1
-    private var _rounds: Int = 1
+    private var _roundTime: Double = 0 {
+        didSet {
+            totalWorkoutTime.onNext(string(of: totalTime))
+        }
+    }
+    private var _restTime: Double = 0 {
+        didSet {
+            totalWorkoutTime.onNext(string(of: totalTime))
+        }
+    }
+    private var _sets: Int = 1 {
+        didSet {
+            totalWorkoutTime.onNext(string(of: totalTime))
+        }
+    }
+    private var _laps: Int = 1 {
+        didSet {
+            totalWorkoutTime.onNext(string(of: totalTime))
+        }
+    }
+    
+    private var totalTime: Double {
+        (_roundTime + _restTime) * Double(_sets * _laps)
+    }
     
     // MARK: - Object Methods
     
-    func toSecondts(minutes: Int, seconds: Int) -> Double {
-        return Double(60 * minutes + seconds)
-    }
+    
     
     
     // MARK: - Inputs/Outputs
     
     func setWorkoutTime(_ minutes: Int, _ seconds: Int) {
-        _roundTime = toSecondts(minutes: minutes, seconds: seconds)
-        roundTime.onNext(_roundTime)
+        _roundTime = toSeconds(minutes: minutes, seconds: seconds)
+        roundTime.onNext(string(of: _roundTime))
     }
     
     func setRestTime(_ minutes: Int, _ seconds: Int) {
-        _restTime = toSecondts(minutes: minutes, seconds: seconds)
-        restTime.onNext(_restTime)
+        _restTime = toSeconds(minutes: minutes, seconds: seconds)
+        restTime.onNext(string(of: _restTime))
     }
     
-    func setSetsNumber(_ sets: Int) {
-        _sets = sets
-        self.sets.onNext(_sets)
+    func setSets(_ count: Int) {
+        _sets = count
+        sets.onNext(String(_sets))
     }
     
-    func setRoundsNumber(_ rounds: Int) {
-        _rounds = rounds
-        self.rounds.onNext(_rounds)
+    func setLaps(_ count: Int) {
+        _laps = count
+        laps.onNext(String(_laps))
     }
     
-    var roundTime = BehaviorSubject<TimeInterval>(value: 0)
-    var restTime = BehaviorSubject<TimeInterval>(value: 0)
-    var sets = BehaviorSubject<Int>(value: 1)
-    var rounds = BehaviorSubject<Int>(value: 1)
-    var totalWorkoutTime = BehaviorSubject<TimeInterval>(value: 0)
-    
-    
-    
+    var roundTime = BehaviorSubject<String>(value: "00:00")
+    var restTime = BehaviorSubject<String>(value: "00:00")
+    var sets = BehaviorSubject<String>(value: "1")
+    var laps = BehaviorSubject<String>(value: "1")
+    var totalWorkoutTime = BehaviorSubject<String>(value: "00:00:00")
     
     init() { }
-    
     
     // MARK: - Inputs/Outputs
     
     var inputs: WorkoutSettingsViewModelInputs { return self }
-    
     var outputs: WorkoutSettingsViewModelOutputs { return self }
     
+    
+}
+
+
+// MARK: - Helper functions
+extension WorkoutSettingsViewModel {
+    func string(of interval: TimeInterval) -> String {
+        if interval > 3599 {
+            return DateComponentsFormatter.fullStyle.string(from: interval) ?? ""
+        } else {
+            return DateComponentsFormatter.shortStyle.string(from: interval) ?? ""
+        }
+    }
+    
+    func toSeconds(minutes: Int, seconds: Int) -> Double {
+        return Double(60 * minutes + seconds)
+    }
 }

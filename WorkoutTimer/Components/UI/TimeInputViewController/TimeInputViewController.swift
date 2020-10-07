@@ -14,7 +14,7 @@ enum Input {
     case workoutTime
     case restTime
     case sets
-    case rounds
+    case laps
 }
 
 class TimeInputViewController: UIViewController, Storyboarded, InputConfigurable {

@@ -177,7 +177,7 @@
                                             <outletCollection property="gestureRecognizers" destination="1Q2-dj-XQb" appends="YES" id="NZI-fA-53q"/>
                                         </connections>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zgj-2W-pWc" customClass="WorkoutItemView" customModule="WorkoutTimer" customModuleProvider="target">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zgj-2W-pWc" userLabel="Laps Config View" customClass="WorkoutItemView" customModule="WorkoutTimer" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="307" width="382" height="86"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <gestureRecognizers/>
@@ -185,7 +185,7 @@
                                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                                 <real key="value" value="10"/>
                                             </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="string" keyPath="titleText" value="Rounds"/>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="titleText" value="Laps"/>
                                             <userDefinedRuntimeAttribute type="string" keyPath="valueText" value="2X"/>
                                         </userDefinedRuntimeAttributes>
                                         <connections>
@@ -235,8 +235,8 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="lapsConfigView" destination="Zgj-2W-pWc" id="lvW-N0-OXQ"/>
                         <outlet property="restConfigView" destination="wMF-ob-aGe" id="JZH-xe-2iI"/>
-                        <outlet property="roundsConfigView" destination="Zgj-2W-pWc" id="UE5-IL-jR7"/>
                         <outlet property="setsConfigView" destination="waP-3l-yu1" id="wB4-GL-UYi"/>
                         <outlet property="startWorkoutButton" destination="RLZ-zf-wuB" id="XTu-ON-Emq"/>
                         <outlet property="totalWorkoutTimeLabel" destination="mUs-50-b1V" id="bBI-oI-Z9S"/>
@@ -263,7 +263,7 @@
                 </tapGestureRecognizer>
                 <tapGestureRecognizer id="AMo-fd-6Xz">
                     <connections>
-                        <action selector="tapGestureRoundsConfigView:" destination="jJv-MO-4da" id="crV-8M-8M6"/>
+                        <action selector="tapGestureLapsConfigView:" destination="jJv-MO-4da" id="oH1-9H-JeV"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>

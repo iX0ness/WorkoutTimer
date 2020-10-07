@@ -14,7 +14,7 @@ class WorkoutSettingsViewController: UIViewController, Storyboarded {
     // MARK: - Stored properties
     
     weak var coordinator: MainCoordinator?
-    var viewModel: WorkoutSettingsViewModel?
+    var viewModel: WorkoutSettingsViewModelType?
     
     
     let disposeBag = DisposeBag()
@@ -24,7 +24,7 @@ class WorkoutSettingsViewController: UIViewController, Storyboarded {
     @IBOutlet weak var workConfigView: WorkoutItemView!
     @IBOutlet weak var restConfigView: WorkoutItemView!
     @IBOutlet weak var setsConfigView: WorkoutItemView!
-    @IBOutlet weak var roundsConfigView: WorkoutItemView!
+    @IBOutlet weak var lapsConfigView: WorkoutItemView!
     @IBOutlet weak var workoutConfigStackView: UIStackView!
     
     @IBOutlet weak var totalWorkoutTimeView: UIView!
@@ -81,12 +81,12 @@ class WorkoutSettingsViewController: UIViewController, Storyboarded {
         handleInput(of: popup)
     }
     
-    @IBAction func tapGestureRoundsConfigView(_ sender: UITapGestureRecognizer) {
+    @IBAction func tapGestureLapsConfigView(_ sender: UITapGestureRecognizer) {
         guard let popup = showPopup(
-                title: "Enter rounds",
+                title: "Enter laps",
                 inputType: .single(primaryPlaceholder: "1",
-                                   priparyDescription: "rounds"),
-                inputParameter: .rounds) else { return }
+                                   priparyDescription: "laps"),
+                inputParameter: .laps) else { return }
         handleInput(of: popup)
     }
     
@@ -135,48 +135,41 @@ extension WorkoutSettingsViewController {
             case .restTime:
                 self.viewModel?.inputs.setRestTime(popup.primaryTextFiedInput, popup.secondaryTextFiedInput)
             case .sets:
-                self.viewModel?.inputs.setSetsNumber(popup.primaryTextFiedInput)
-            case .rounds:
-                self.viewModel?.inputs.setRoundsNumber(popup.primaryTextFiedInput)
+                self.viewModel?.inputs.setSets(popup.primaryTextFiedInput)
+            case .laps:
+                self.viewModel?.inputs.setLaps(popup.primaryTextFiedInput)
             }
             
         }.disposed(by: disposeBag)
     }
     
     func observeWorkoutConfiguration() {
-        viewModel?.roundTime
-            .map(toTimeString(_:))
-            .subscribe(onNext: { [weak self] time in
+        viewModel?.outputs.roundTime
+            .subscribe { [weak self] time in
                 self?.workConfigView.valueText = time
-            }).disposed(by: disposeBag)
+            }.disposed(by: disposeBag)
         
-        viewModel?.restTime
-            .map(toTimeString(_:))
-            .subscribe(onNext: { [weak self] time in
+        viewModel?.outputs.restTime
+            .subscribe { [weak self] time in
                 self?.restConfigView.valueText = time
-            }).disposed(by: disposeBag)
+            }.disposed(by: disposeBag)
         
-        viewModel?.sets
-            .subscribe(onNext: { [weak self] sets in
-                self?.setsConfigView.valueText = String(sets)
-            }).disposed(by: disposeBag)
+        viewModel?.outputs.sets
+            .subscribe { [weak self] sets in
+                self?.setsConfigView.valueText = sets
+            }.disposed(by: disposeBag)
         
-        viewModel?.rounds
-            .subscribe(onNext: { [weak self] rounds in
-                self?.roundsConfigView.valueText = String(rounds)
-            }).disposed(by: disposeBag)
+        viewModel?.outputs.laps
+            .subscribe { [weak self] laps in
+                self?.lapsConfigView.valueText = laps
+            }.disposed(by: disposeBag)
+        
+        viewModel?.outputs.totalWorkoutTime
+            .subscribe { [weak self] time in
+                self?.totalWorkoutTimeLabel.text = time
+            }.disposed(by: disposeBag)
         
     }
     
-    func toTimeString(_ interval: TimeInterval) -> String {
-        let formatter = DateComponentsFormatter()
-        if interval > 3599 {
-            formatter.allowedUnits = [.hour, .minute, .second]
-        } else {
-            formatter.allowedUnits = [.minute, .second]
-        }
-        formatter.unitsStyle = .positional
-        formatter.zeroFormattingBehavior = .pad
-        return formatter.string(from: interval)!
-    }
+    
 }

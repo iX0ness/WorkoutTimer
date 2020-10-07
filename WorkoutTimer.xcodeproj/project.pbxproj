@@ -22,6 +22,7 @@
 		8B80EF5724F05845009FDB9D /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B80EF5624F05845009FDB9D /* Time.swift */; };
 		8B8B269424F16F9600528D6B /* InputConfigurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B8B269324F16F9600528D6B /* InputConfigurable.swift */; };
 		8BC52BC924EAF7CE00181B81 /* WorkoutItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC52BC824EAF7CE00181B81 /* WorkoutItemView.swift */; };
+		8BE03510252DF42B00F142E8 /* DateComponentsFormatter+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE0350F252DF42B00F142E8 /* DateComponentsFormatter+Extension.swift */; };
 		8BE1CEAE24EDB84200D9A354 /* TimeInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1CEAD24EDB84200D9A354 /* TimeInputViewController.swift */; };
 		8BEF532124E6B4DF00220894 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BEF532024E6B4DF00220894 /* AppDelegate.swift */; };
 		8BEF532324E6B4DF00220894 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BEF532224E6B4DF00220894 /* SceneDelegate.swift */; };
@@ -45,6 +46,7 @@
 		8B80EF5624F05845009FDB9D /* Time.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Time.swift; sourceTree = "<group>"; };
 		8B8B269324F16F9600528D6B /* InputConfigurable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputConfigurable.swift; sourceTree = "<group>"; };
 		8BC52BC824EAF7CE00181B81 /* WorkoutItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutItemView.swift; sourceTree = "<group>"; };
+		8BE0350F252DF42B00F142E8 /* DateComponentsFormatter+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateComponentsFormatter+Extension.swift"; sourceTree = "<group>"; };
 		8BE1CEAD24EDB84200D9A354 /* TimeInputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeInputViewController.swift; sourceTree = "<group>"; };
 		8BEF531D24E6B4DF00220894 /* WorkoutTimer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WorkoutTimer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BEF532024E6B4DF00220894 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -122,6 +124,7 @@
 			children = (
 				3268BD6B24E7F6DF00DD4FA9 /* UIColor+HEX.swift */,
 				8B78CD4424EC46E400C819E2 /* UIScreen+Dimension.swift */,
+				8BE0350F252DF42B00F142E8 /* DateComponentsFormatter+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -315,6 +318,7 @@
 				323B703924E6E35C00108AB2 /* WorkoutSettingsViewController.swift in Sources */,
 				8B8B269424F16F9600528D6B /* InputConfigurable.swift in Sources */,
 				8BEF532324E6B4DF00220894 /* SceneDelegate.swift in Sources */,
+				8BE03510252DF42B00F142E8 /* DateComponentsFormatter+Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
