@@ -59,8 +59,6 @@ class WorkoutSettingsViewModel: WorkoutSettingsViewModelType, WorkoutSettingsVie
     // MARK: - Object Methods
     
     
-    
-    
     // MARK: - Inputs/Outputs
     
     func setWorkoutTime(_ minutes: Int, _ seconds: Int) {
