@@ -219,6 +219,7 @@
                                 <color key="backgroundColor" red="0.95686274509803915" green="0.94901960784313721" blue="0.92549019607843142" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" image="power-button-4"/>
                                 <connections>
+                                    <action selector="startWorkout:" destination="jJv-MO-4da" eventType="touchUpInside" id="emL-GI-kyX"/>
                                     <action selector="startWorkoutAction:" destination="jJv-MO-4da" eventType="touchUpInside" id="DPM-Ds-Jhv"/>
                                 </connections>
                             </button>

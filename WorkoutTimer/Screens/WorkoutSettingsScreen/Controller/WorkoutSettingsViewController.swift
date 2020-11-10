@@ -90,6 +90,9 @@ class WorkoutSettingsViewController: UIViewController, Storyboarded {
         handleInput(of: popup)
     }
     
+    @IBAction func startWorkout(_ sender: UIButton) {
+        coordinator?.showCountdownTimerViewController()
+    }
     
     private func showPopup(title: String, inputType: InputType, inputParameter: InputParameter) -> TimeInputViewController? {
         guard let popupViewController = coordinator?.showInputPopup(title, inputType, inputParameter) else { return nil }
