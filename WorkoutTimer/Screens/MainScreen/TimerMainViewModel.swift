@@ -11,6 +11,7 @@ import RxSwift
 import AVFoundation
 
 protocol TimerMainViewModelInputs {
+    func makeSound()
     func pause()
     func cancel()
 }
@@ -24,8 +25,6 @@ protocol TimerMainViewModelType {
 
 class TimerMainViewModel: TimerMainViewModelType, TimerMainViewModelInputs, TimerMainViewModelOutputs {
     
-    
-
     var workoutTimeFlow: Observable<Int>
     var soundPlayer: AVAudioPlayer?
     let disposeBag = DisposeBag()
@@ -36,12 +35,10 @@ class TimerMainViewModel: TimerMainViewModelType, TimerMainViewModelInputs, Time
             rounds: workout.rounds,
             roundTime: Int(workout.roundTime),
             restTime: Int(workout.restTime)
-        )
-        timerSubscription = workoutTimeFlow.subscribe(onNext: { [weak self] time in
-            self?.produceTickSound()
-        }, onDisposed: {
-            print("Disposed")
-        })
+        ).share()
+    }
+    func makeSound() {
+        produceTickSound()
     }
     
     func pause() {
@@ -49,13 +46,8 @@ class TimerMainViewModel: TimerMainViewModelType, TimerMainViewModelInputs, Time
     }
     
     func cancel() {
-        //workoutTimeF
-        timerSubscription?.dispose()
         
     }
-    
-    private var timerSubscription: Disposable?
-    
     
     var inputs: TimerMainViewModelInputs { return self }
     var outputs: TimerMainViewModelOutputs { return self }
@@ -74,20 +66,6 @@ private extension TimerMainViewModel {
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // MARK: - Time Observables
 private extension TimerMainViewModel {
