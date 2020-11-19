@@ -37,7 +37,6 @@ class WorkoutSettingsViewController: UIViewController, Storyboarded {
         super.viewDidLoad()
         setupView()
         observeWorkoutConfiguration()
-        
     }
     
     // MARK: - IB Actions
@@ -91,7 +90,12 @@ class WorkoutSettingsViewController: UIViewController, Storyboarded {
     }
     
     @IBAction func startWorkout(_ sender: UIButton) {
-        coordinator?.showCountdownTimerViewController()
+        viewModel?.outputs.workout.subscribe(onNext: { (workout) in
+            guard workout.roundTime != 0 else { return }
+            print(workout)
+            self.coordinator?.showCountdownTimerViewController(for: workout)
+        }).disposed(by: disposeBag)
+        
     }
     
     private func showPopup(title: String, inputType: InputType, inputParameter: InputParameter) -> TimeInputViewController? {

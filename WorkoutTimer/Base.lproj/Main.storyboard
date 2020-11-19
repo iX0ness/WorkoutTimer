@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="jJv-MO-4da">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -16,13 +16,68 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Adf-q5-d1Y">
+                                <rect key="frame" x="107" y="198" width="200" height="200"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="25" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y8C-hz-Wmj">
+                                        <rect key="frame" x="50" y="50" width="100" height="100"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="AV2-aO-PtP"/>
+                                            <constraint firstAttribute="height" constant="100" id="sFK-ru-uN5"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="55"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="200" id="M38-Lk-CnY"/>
+                                    <constraint firstAttribute="width" constant="200" id="ZOI-2t-p9x"/>
+                                    <constraint firstItem="y8C-hz-Wmj" firstAttribute="centerY" secondItem="Adf-q5-d1Y" secondAttribute="centerY" id="ffl-gc-9jt"/>
+                                    <constraint firstItem="y8C-hz-Wmj" firstAttribute="centerX" secondItem="Adf-q5-d1Y" secondAttribute="centerX" id="sGl-el-Iqb"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CJP-99-2Kj">
+                                <rect key="frame" x="177" y="448" width="60" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="60" id="a0c-eK-SOV"/>
+                                    <constraint firstAttribute="height" constant="60" id="sSe-Rh-Gch"/>
+                                </constraints>
+                                <state key="normal" image="play-button"/>
+                                <connections>
+                                    <action selector="controllWorkoutFlow:" destination="BYZ-38-t0r" eventType="touchUpInside" id="a0t-EF-HLS"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4uw-KH-CpO">
+                                <rect key="frame" x="169" y="528" width="76" height="42"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <state key="normal" title="Cancel"/>
+                                <connections>
+                                    <action selector="stopWorkout:" destination="BYZ-38-t0r" eventType="touchUpInside" id="zry-Xw-ioL"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" systemColor="systemOrangeColor"/>
+                        <constraints>
+                            <constraint firstItem="Adf-q5-d1Y" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="-150" id="H6F-kG-azi"/>
+                            <constraint firstItem="CJP-99-2Kj" firstAttribute="top" secondItem="Adf-q5-d1Y" secondAttribute="bottom" constant="50" id="RK9-D3-pe7"/>
+                            <constraint firstItem="4uw-KH-CpO" firstAttribute="top" secondItem="CJP-99-2Kj" secondAttribute="bottom" constant="20" id="Uwu-nu-N2h"/>
+                            <constraint firstItem="CJP-99-2Kj" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="XPA-UZ-THK"/>
+                            <constraint firstItem="Adf-q5-d1Y" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="eO5-Z9-OJD"/>
+                            <constraint firstItem="4uw-KH-CpO" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="yOd-Mt-nDk"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="timeLabel" destination="y8C-hz-Wmj" id="0Wk-VJ-JHn"/>
+                        <outlet property="timeView" destination="Adf-q5-d1Y" id="c9e-Zt-Zb3"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-328" y="131"/>
+            <point key="canvasLocation" x="755.07246376811599" y="102.45535714285714"/>
         </scene>
         <!--Time Input View Controller-->
         <scene sceneID="pO6-K7-HMs">
@@ -268,14 +323,18 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="556.52173913043487" y="130.58035714285714"/>
+            <point key="canvasLocation" x="-196" y="103"/>
         </scene>
     </scenes>
     <resources>
         <image name="cancel" width="512" height="512"/>
+        <image name="play-button" width="512" height="512"/>
         <image name="power-button-4" width="512" height="512"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemOrangeColor">
+            <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

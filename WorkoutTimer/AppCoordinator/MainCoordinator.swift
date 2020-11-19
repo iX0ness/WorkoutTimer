@@ -38,8 +38,9 @@ class MainCoordinator: Coordinator {
         return popupViewController
     }
 
-    func showCountdownTimerViewController() {
+    func showCountdownTimerViewController(for workout: Workout) {
         let workoutSettingsViewController = TimerMainViewController.instantiate()
+        workoutSettingsViewController.viewModel = TimerMainViewModel(workout: workout)
         navigationController.pushViewController(workoutSettingsViewController, animated: true)
     }
 }

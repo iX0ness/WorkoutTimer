@@ -25,11 +25,45 @@ protocol WorkoutSettingsViewModelOutputs {
     var sets: BehaviorSubject<String> { get }
     var laps: BehaviorSubject<String> { get }
     var totalWorkoutTime: BehaviorSubject<String> { get }
+    var workout: BehaviorSubject<Workout> { get }
 }
 
 class WorkoutSettingsViewModel: WorkoutSettingsViewModelType, WorkoutSettingsViewModelInputs, WorkoutSettingsViewModelOutputs {
     
-    // MARK: - Object Properties
+    var roundTime = BehaviorSubject<String>(value: "00:00")
+    var restTime = BehaviorSubject<String>(value: "00:00")
+    var sets = BehaviorSubject<String>(value: "1")
+    var laps = BehaviorSubject<String>(value: "1")
+    var totalWorkoutTime = BehaviorSubject<String>(value: "00:00:00")
+    var workout: BehaviorSubject<Workout>
+    
+    init() {
+        workout = BehaviorSubject(value: Workout(laps: _laps, rounds: _sets, roundTime: _roundTime, restTime: _restTime))
+    }
+    
+    func setWorkoutTime(_ minutes: Int, _ seconds: Int) {
+        _roundTime = toSeconds(minutes: minutes, seconds: seconds)
+        roundTime.onNext(string(of: _roundTime))
+        workout.onNext(Workout(laps: _laps, rounds: _sets, roundTime: _roundTime, restTime: _restTime))
+    }
+    
+    func setRestTime(_ minutes: Int, _ seconds: Int) {
+        _restTime = toSeconds(minutes: minutes, seconds: seconds)
+        restTime.onNext(string(of: _restTime))
+        workout.onNext(Workout(laps: _laps, rounds: _sets, roundTime: _roundTime, restTime: _restTime))
+    }
+    
+    func setSets(_ count: Int) {
+        _sets = count
+        sets.onNext(String(_sets))
+        workout.onNext(Workout(laps: _laps, rounds: _sets, roundTime: _roundTime, restTime: _restTime))
+    }
+    
+    func setLaps(_ count: Int) {
+        _laps = count
+        laps.onNext(String(_laps))
+        workout.onNext(Workout(laps: _laps, rounds: _sets, roundTime: _roundTime, restTime: _restTime))
+    }
     
     private var _roundTime: Double = 0 {
         didSet {
@@ -56,47 +90,9 @@ class WorkoutSettingsViewModel: WorkoutSettingsViewModelType, WorkoutSettingsVie
         (_roundTime + _restTime) * Double(_sets * _laps)
     }
     
-    // MARK: - Object Methods
-    
-    
-    // MARK: - Inputs/Outputs
-    
-    func setWorkoutTime(_ minutes: Int, _ seconds: Int) {
-        _roundTime = toSeconds(minutes: minutes, seconds: seconds)
-        roundTime.onNext(string(of: _roundTime))
-    }
-    
-    func setRestTime(_ minutes: Int, _ seconds: Int) {
-        _restTime = toSeconds(minutes: minutes, seconds: seconds)
-        restTime.onNext(string(of: _restTime))
-    }
-    
-    func setSets(_ count: Int) {
-        _sets = count
-        sets.onNext(String(_sets))
-    }
-    
-    func setLaps(_ count: Int) {
-        _laps = count
-        laps.onNext(String(_laps))
-    }
-    
-    var roundTime = BehaviorSubject<String>(value: "00:00")
-    var restTime = BehaviorSubject<String>(value: "00:00")
-    var sets = BehaviorSubject<String>(value: "1")
-    var laps = BehaviorSubject<String>(value: "1")
-    var totalWorkoutTime = BehaviorSubject<String>(value: "00:00:00")
-    
-    init() { }
-    
-    // MARK: - Inputs/Outputs
-    
     var inputs: WorkoutSettingsViewModelInputs { return self }
     var outputs: WorkoutSettingsViewModelOutputs { return self }
-    
-    
 }
-
 
 // MARK: - Helper functions
 extension WorkoutSettingsViewModel {
@@ -111,4 +107,11 @@ extension WorkoutSettingsViewModel {
     func toSeconds(minutes: Int, seconds: Int) -> Double {
         return Double(60 * minutes + seconds)
     }
+}
+
+struct Workout {
+    var laps: Int
+    var rounds: Int
+    var roundTime: Double
+    var restTime: Double
 }
