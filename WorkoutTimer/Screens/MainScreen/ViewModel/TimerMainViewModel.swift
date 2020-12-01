@@ -12,11 +12,13 @@ import AVFoundation
 
 protocol TimerMainViewModelInputs {
     func makeSound()
-    func pause()
+    func changeFlowState()
     func cancel()
+   
 }
 protocol TimerMainViewModelOutputs {
     var workoutTimeFlow: Observable<Int> { get }
+    var workoutState: BehaviorSubject<WorkoutState> { get }
 }
 protocol TimerMainViewModelType {
     var inputs: TimerMainViewModelInputs { get }
@@ -25,6 +27,7 @@ protocol TimerMainViewModelType {
 
 class TimerMainViewModel: TimerMainViewModelType, TimerMainViewModelInputs, TimerMainViewModelOutputs {
     
+    var workoutState: BehaviorSubject<WorkoutState> = BehaviorSubject(value: .running)
     var workoutTimeFlow: Observable<Int>
     var soundPlayer: AVAudioPlayer?
     let disposeBag = DisposeBag()
@@ -41,14 +44,23 @@ class TimerMainViewModel: TimerMainViewModelType, TimerMainViewModelInputs, Time
         produceTickSound()
     }
     
-    func pause() {
+    func changeFlowState() {
+        guard let state = try? workoutState.value() else {
+            fatalError("Workout must have some enty state")
+        }
         
+        switch state {
+        case .paused:
+            self.workoutState.onNext(.running)
+        case .running:
+            self.workoutState.onNext(.paused)
+        }
     }
     
     func cancel() {
         
     }
-    
+
     var inputs: TimerMainViewModelInputs { return self }
     var outputs: TimerMainViewModelOutputs { return self }
 }
@@ -107,4 +119,9 @@ private extension TimerMainViewModel {
             .map { _ in return createPairedActionRestLap(rounds: rounds, roundTime: roundTime, restTime: restTime) }
             .flatMap { $0 }
     }
+}
+
+enum WorkoutState {
+    case running
+    case paused
 }

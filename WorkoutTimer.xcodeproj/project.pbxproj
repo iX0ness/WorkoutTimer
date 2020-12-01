@@ -87,8 +87,8 @@
 		323B703424E6E2FF00108AB2 /* MainScreen */ = {
 			isa = PBXGroup;
 			children = (
-				8BEF532424E6B4DF00220894 /* TimerMainViewController.swift */,
-				323B703624E6E33600108AB2 /* TimerMainViewModel.swift */,
+				88BF0718256D823F005A0965 /* Controller */,
+				88BF0717256D822E005A0965 /* ViewModel */,
 			);
 			path = MainScreen;
 			sourceTree = "<group>";
@@ -137,6 +137,22 @@
 				8819E8892562E62900257EBB /* tick.mp3 */,
 			);
 			path = Sounds;
+			sourceTree = "<group>";
+		};
+		88BF0717256D822E005A0965 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				323B703624E6E33600108AB2 /* TimerMainViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		88BF0718256D823F005A0965 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				8BEF532424E6B4DF00220894 /* TimerMainViewController.swift */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 		8B80EF4E24F04932009FDB9D /* Model */ = {
@@ -265,7 +281,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1160;
-				LastUpgradeCheck = 1160;
+				LastUpgradeCheck = 1220;
 				ORGANIZATIONNAME = "Mykhaylo Levchuk";
 				TargetAttributes = {
 					8BEF531C24E6B4DF00220894 = {
@@ -382,6 +398,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -442,6 +459,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;

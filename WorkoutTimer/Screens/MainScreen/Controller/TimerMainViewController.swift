@@ -15,7 +15,8 @@ class TimerMainViewController: UIViewController, Storyboarded {
     
     @IBOutlet weak var timeView: UIView!
     @IBOutlet weak var timeLabel: UILabel!
-
+    @IBOutlet weak var flowControlButton: UIButton!
+    
     deinit {
         print("deinitialized")
     }
@@ -24,23 +25,14 @@ class TimerMainViewController: UIViewController, Storyboarded {
         super.viewDidLoad()
         view.backgroundColor = .yellow
         setupTimeView()
-        workoutFlowSubscription = viewModel?.outputs.workoutTimeFlow
-            .map { String($0) }
-            .bind(to: timeLabel.rx.text)
-            
-        workoutFlowSubscription = viewModel?.outputs.workoutTimeFlow
-            .subscribe(onNext: { [weak self] _ in
-                self?.viewModel?.inputs.makeSound()
-            },
-            onDisposed: {
-                self.navigationController?.popViewController(animated: true)
-            })
+        bindViewModel()
         
     }
     
     @IBAction func controllWorkoutFlow(_ sender: UIButton) {
-        viewModel?.inputs.pause()
+        viewModel?.inputs.changeFlowState()
     }
+    
     @IBAction func stopWorkout(_ sender: UIButton) {
         workoutFlowSubscription?.dispose()
         viewModel?.inputs.cancel()
@@ -58,5 +50,39 @@ private extension TimerMainViewController {
         timeLabel.textColor = ColorPalette.primary.color
         
     }
+    
+    func bindViewModel() {
+        workoutFlowSubscription = viewModel?.outputs.workoutTimeFlow
+            .map { String($0) }
+            .bind(to: timeLabel.rx.text)
+        
+        workoutFlowSubscription = viewModel?.outputs.workoutTimeFlow
+            .subscribe(onNext: { [weak self] _ in
+                self?.viewModel?.inputs.makeSound()
+            },
+            onDisposed: {
+                self.navigationController?.popViewController(animated: true)
+            })
+        
+        viewModel?.outputs.workoutState
+            .subscribe { [weak self] state in
+                self?.setFlowControlButtonImage(for: state)
+            }.disposed(by: disposeBag)
+    }
+    
+    func setFlowControlButtonImage(for state: WorkoutState) {
+        switch state {
+        case .running:
+            flowControlButton.setImage(UIImage(named: "play-button"), for: .normal)
+            
+        case .paused:
+            flowControlButton.setImage(UIImage(named: "pause"), for: .normal)
+            
+        }
+    }
+    
+    
+    
 }
+
 
