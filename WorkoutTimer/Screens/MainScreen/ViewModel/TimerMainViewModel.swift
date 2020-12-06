@@ -27,7 +27,7 @@ protocol TimerMainViewModelType {
 
 class TimerMainViewModel: TimerMainViewModelType, TimerMainViewModelInputs, TimerMainViewModelOutputs {
     
-    var workoutState: BehaviorSubject<WorkoutState> = BehaviorSubject(value: .running)
+    var workoutState: BehaviorSubject<WorkoutState> = BehaviorSubject(value: .running(true))
     var workoutTimeFlow: Observable<Int>
     var soundPlayer: AVAudioPlayer?
     let disposeBag = DisposeBag()
@@ -39,7 +39,11 @@ class TimerMainViewModel: TimerMainViewModelType, TimerMainViewModelInputs, Time
             roundTime: Int(workout.roundTime),
             restTime: Int(workout.restTime)
         ).share()
+        
+        let observable = Observable<Int>.interval(RxTimeInterval.seconds(1), scheduler: MainScheduler.instance)
+        
     }
+    
     func makeSound() {
         produceTickSound()
     }
@@ -51,9 +55,9 @@ class TimerMainViewModel: TimerMainViewModelType, TimerMainViewModelInputs, Time
         
         switch state {
         case .paused:
-            self.workoutState.onNext(.running)
+            self.workoutState.onNext(.running(true))
         case .running:
-            self.workoutState.onNext(.paused)
+            self.workoutState.onNext(.paused(false))
         }
     }
     
@@ -122,6 +126,7 @@ private extension TimerMainViewModel {
 }
 
 enum WorkoutState {
-    case running
-    case paused
+    case running(Bool)
+    case paused(Bool)
+    
 }

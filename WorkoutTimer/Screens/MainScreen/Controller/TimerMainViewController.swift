@@ -25,7 +25,7 @@ class TimerMainViewController: UIViewController, Storyboarded {
         super.viewDidLoad()
         view.backgroundColor = .yellow
         setupTimeView()
-        bindViewModel()
+        //bindViewModel()
         
     }
     
