@@ -16,7 +16,7 @@
 		323B703E24E6E71300108AB2 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 323B703D24E6E71300108AB2 /* MainCoordinator.swift */; };
 		323B704024E6E82500108AB2 /* UIViewController+Storyboarded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 323B703F24E6E82500108AB2 /* UIViewController+Storyboarded.swift */; };
 		3268BD6C24E7F6DF00DD4FA9 /* UIColor+HEX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3268BD6B24E7F6DF00DD4FA9 /* UIColor+HEX.swift */; };
-		8802D7D92576DCDF00435481 /* ObservableType+Pausable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8802D7D82576DCDF00435481 /* ObservableType+Pausable.swift */; };
+		52A15FD1258A47AE00A08898 /* WorkoutState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A15FD0258A47AE00A08898 /* WorkoutState.swift */; };
 		8819E88A2562E62900257EBB /* tick.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8819E8892562E62900257EBB /* tick.mp3 */; };
 		8B78CD4524EC46E400C819E2 /* UIScreen+Dimension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B78CD4424EC46E400C819E2 /* UIScreen+Dimension.swift */; };
 		8B80EF5024F04946009FDB9D /* WorkoutConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B80EF4F24F04946009FDB9D /* WorkoutConfiguration.swift */; };
@@ -42,7 +42,7 @@
 		323B703D24E6E71300108AB2 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		323B703F24E6E82500108AB2 /* UIViewController+Storyboarded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Storyboarded.swift"; sourceTree = "<group>"; };
 		3268BD6B24E7F6DF00DD4FA9 /* UIColor+HEX.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+HEX.swift"; sourceTree = "<group>"; };
-		8802D7D82576DCDF00435481 /* ObservableType+Pausable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ObservableType+Pausable.swift"; sourceTree = "<group>"; };
+		52A15FD0258A47AE00A08898 /* WorkoutState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutState.swift; sourceTree = "<group>"; };
 		8819E8892562E62900257EBB /* tick.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = tick.mp3; sourceTree = "<group>"; };
 		8B78CD4424EC46E400C819E2 /* UIScreen+Dimension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScreen+Dimension.swift"; sourceTree = "<group>"; };
 		8B80EF4F24F04946009FDB9D /* WorkoutConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutConfiguration.swift; sourceTree = "<group>"; };
@@ -89,6 +89,7 @@
 		323B703424E6E2FF00108AB2 /* MainScreen */ = {
 			isa = PBXGroup;
 			children = (
+				52A15FCF258A479700A08898 /* Model */,
 				88BF0718256D823F005A0965 /* Controller */,
 				88BF0717256D822E005A0965 /* ViewModel */,
 			);
@@ -126,7 +127,6 @@
 		3268BD6A24E7F6CC00DD4FA9 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				8802D7D72576DC9500435481 /* Reactive */,
 				3268BD6B24E7F6DF00DD4FA9 /* UIColor+HEX.swift */,
 				8B78CD4424EC46E400C819E2 /* UIScreen+Dimension.swift */,
 				8BE0350F252DF42B00F142E8 /* DateComponentsFormatter+Extension.swift */,
@@ -134,12 +134,12 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		8802D7D72576DC9500435481 /* Reactive */ = {
+		52A15FCF258A479700A08898 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				8802D7D82576DCDF00435481 /* ObservableType+Pausable.swift */,
+				52A15FD0258A47AE00A08898 /* WorkoutState.swift */,
 			);
-			path = Reactive;
+			path = Model;
 			sourceTree = "<group>";
 		};
 		8819E8882562E61400257EBB /* Sounds */ = {
@@ -351,11 +351,11 @@
 				8B80EF5324F054D0009FDB9D /* Unit.swift in Sources */,
 				323B703724E6E33600108AB2 /* TimerMainViewModel.swift in Sources */,
 				8BC52BC924EAF7CE00181B81 /* WorkoutItemView.swift in Sources */,
+				52A15FD1258A47AE00A08898 /* WorkoutState.swift in Sources */,
 				8BEF533524E8135300220894 /* ColorPalette.swift in Sources */,
 				8BEF532124E6B4DF00220894 /* AppDelegate.swift in Sources */,
 				323B703B24E6E41A00108AB2 /* WorkoutSettingsViewModel.swift in Sources */,
 				323B703924E6E35C00108AB2 /* WorkoutSettingsViewController.swift in Sources */,
-				8802D7D92576DCDF00435481 /* ObservableType+Pausable.swift in Sources */,
 				8B8B269424F16F9600528D6B /* InputConfigurable.swift in Sources */,
 				8BEF532324E6B4DF00220894 /* SceneDelegate.swift in Sources */,
 				8BE03510252DF42B00F142E8 /* DateComponentsFormatter+Extension.swift in Sources */,

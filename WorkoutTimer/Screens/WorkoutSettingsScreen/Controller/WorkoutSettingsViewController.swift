@@ -92,7 +92,6 @@ class WorkoutSettingsViewController: UIViewController, Storyboarded {
     @IBAction func startWorkout(_ sender: UIButton) {
         viewModel?.outputs.workout.subscribe(onNext: { (workout) in
             guard workout.roundTime != 0 else { return }
-            print(workout)
             self.coordinator?.showCountdownTimerViewController(for: workout)
         }).disposed(by: disposeBag)
         

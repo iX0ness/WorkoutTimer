@@ -18,28 +18,26 @@ class TimerMainViewController: UIViewController, Storyboarded {
     @IBOutlet weak var flowControlButton: UIButton!
     
     deinit {
-        print("deinitialized")
+        print("Deinitialized Main")
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .yellow
         setupTimeView()
-        //bindViewModel()
-        
+        bindState()
     }
     
     @IBAction func controllWorkoutFlow(_ sender: UIButton) {
-        viewModel?.inputs.changeFlowState()
+        viewModel?.inputs.changeState()
     }
     
     @IBAction func stopWorkout(_ sender: UIButton) {
-        workoutFlowSubscription?.dispose()
-        viewModel?.inputs.cancel()
+        disposable?.dispose()
     }
     
-    private var workoutFlowSubscription: Disposable?
     private var disposeBag = DisposeBag()
+    private var disposable: Disposable?
 }
 
 private extension TimerMainViewController {
@@ -48,41 +46,45 @@ private extension TimerMainViewController {
         timeView.clipsToBounds = true
         timeView.layer.cornerRadius = 10
         timeLabel.textColor = ColorPalette.primary.color
-        
     }
     
-    func bindViewModel() {
-        workoutFlowSubscription = viewModel?.outputs.workoutTimeFlow
-            .map { String($0) }
-            .bind(to: timeLabel.rx.text)
-        
-        workoutFlowSubscription = viewModel?.outputs.workoutTimeFlow
-            .subscribe(onNext: { [weak self] _ in
-                self?.viewModel?.inputs.makeSound()
-            },
-            onDisposed: {
-                self.navigationController?.popViewController(animated: true)
-            })
-        
-        viewModel?.outputs.workoutState
-            .subscribe { [weak self] state in
+    func bindState() {
+        viewModel?.outputs.workoutState.subscribe(onNext: { [weak self] state in
+            switch state {
+            case .paused:
                 self?.setFlowControlButtonImage(for: state)
-            }.disposed(by: disposeBag)
+                self?.disposable?.dispose()
+            case .running:
+                self?.setFlowControlButtonImage(for: state)
+                self?.runTimer()
+            }
+        }).disposed(by: disposeBag)
+    }
+    
+    func runTimer() {
+        guard let viewModel = viewModel else { return }
+        disposable = viewModel.outputs.timer
+            .takeWhile { _ in viewModel.outputs.isTimeRemaining }
+            .map { _ in viewModel.outputs.time }
+            .subscribe (onNext: { time in
+                viewModel.inputs.makeSound()
+                self.timeLabel.text = String(time)
+            })
     }
     
     func setFlowControlButtonImage(for state: WorkoutState) {
         switch state {
-        case .running:
-            flowControlButton.setImage(UIImage(named: "play-button"), for: .normal)
-            
         case .paused:
-            flowControlButton.setImage(UIImage(named: "pause"), for: .normal)
-            
+            self.flowControlButton.setImage(
+                UIImage(named: "play-button"),
+                for: .normal
+            )
+        case .running:
+            self.flowControlButton.setImage(
+                UIImage(named: "pause"),
+                for: .normal)
         }
     }
-    
-    
-    
 }
 
 

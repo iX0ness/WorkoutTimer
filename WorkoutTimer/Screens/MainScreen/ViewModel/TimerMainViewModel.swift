@@ -12,14 +12,16 @@ import AVFoundation
 
 protocol TimerMainViewModelInputs {
     func makeSound()
-    func changeFlowState()
-    func cancel()
-   
+    func changeState()
 }
+
 protocol TimerMainViewModelOutputs {
-    var workoutTimeFlow: Observable<Int> { get }
+    var timer: Observable<Int> { get }
     var workoutState: BehaviorSubject<WorkoutState> { get }
+    var isTimeRemaining: Bool { get }
+    var time: Int { get }
 }
+
 protocol TimerMainViewModelType {
     var inputs: TimerMainViewModelInputs { get }
     var outputs: TimerMainViewModelOutputs { get}
@@ -27,44 +29,39 @@ protocol TimerMainViewModelType {
 
 class TimerMainViewModel: TimerMainViewModelType, TimerMainViewModelInputs, TimerMainViewModelOutputs {
     
-    var workoutState: BehaviorSubject<WorkoutState> = BehaviorSubject(value: .running(true))
-    var workoutTimeFlow: Observable<Int>
-    var soundPlayer: AVAudioPlayer?
-    let disposeBag = DisposeBag()
+    let workoutState: BehaviorSubject<WorkoutState> = BehaviorSubject(value: .running)
+    let timer = Observable<Int>.interval(RxTimeInterval.seconds(1), scheduler: MainScheduler.instance)
+    var isTimeRemaining: Bool { !workout.isEmpty }
+    var time: Int { workout.removeLast() }
     
     init(workout: Workout) {
-        workoutTimeFlow = TimerMainViewModel.configureActionsAndRests(
+        self.workout = configureWorkout(
             laps: workout.laps,
             rounds: workout.rounds,
             roundTime: Int(workout.roundTime),
-            restTime: Int(workout.restTime)
-        ).share()
-        
-        let observable = Observable<Int>.interval(RxTimeInterval.seconds(1), scheduler: MainScheduler.instance)
-        
+            restTime: Int(workout.restTime))
     }
     
     func makeSound() {
         produceTickSound()
     }
     
-    func changeFlowState() {
+    func changeState() {
         guard let state = try? workoutState.value() else {
-            fatalError("Workout must have some enty state")
+            fatalError("Workout must have some entry state")
         }
         
         switch state {
         case .paused:
-            self.workoutState.onNext(.running(true))
+            self.workoutState.onNext(.running)
         case .running:
-            self.workoutState.onNext(.paused(false))
+            self.workoutState.onNext(.paused)
         }
     }
     
-    func cancel() {
-        
-    }
-
+    private var workout: [Int] = []
+    private var soundPlayer: AVAudioPlayer?
+    
     var inputs: TimerMainViewModelInputs { return self }
     var outputs: TimerMainViewModelOutputs { return self }
 }
@@ -83,24 +80,35 @@ private extension TimerMainViewModel {
     }
 }
 
-// MARK: - Time Observables
-private extension TimerMainViewModel {
-    static func runTimer(with time: Int) -> Observable<Int> {
-        return Observable<Int>.interval(RxTimeInterval.seconds(1), scheduler: MainScheduler.instance)
-            .map { time - $0 }
-            .takeUntil(.inclusive, predicate: { $0 == 0 })
+// MARK: - Workout Configurations
+
+extension TimerMainViewModel {
+    func set(roundTime: Int, restTime: Int) -> [[Int]] {
+        return [(0...roundTime).map { $0 }, (0...restTime).map { $0 }]
     }
     
-    static func configureActionsAndRests(laps: Int, rounds: Int, roundTime: Int, restTime: Int) -> Observable<Int> {
+    func multiRoundSet(rounds: Int, roundTime: Int, restTime: Int) -> [[Int]] {
+        return (0...rounds)
+            .map { _ in set(roundTime: roundTime, restTime: restTime) }
+            .flatMap { $0 }
+    }
+    
+    func multiLapSet(laps: Int, rounds: Int, roundTime: Int, restTime: Int) -> [[Int]] {
+        return (0...laps)
+            .map { _ in multiRoundSet(rounds: rounds, roundTime: roundTime, restTime: restTime) }
+            .flatMap { $0 }
+    }
+    
+    func configureWorkout(laps: Int, rounds: Int, roundTime: Int, restTime: Int) -> [Int] {
         switch (laps, rounds) {
         case (1, 1):
-            return runTimer(with: roundTime)
+            return set(roundTime: roundTime, restTime: restTime).dropLast().flatMap { $0 }
+            
         case (1, 1...):
-            let workoutConfig = createPairedActionRestLap(rounds: rounds, roundTime: roundTime, restTime: restTime).dropLast()
-            return Observable.concat(workoutConfig)
-        case (2, 1...):
-            let workoutConfig = createMultiLapWorkoutConfig(laps: laps, rounds: rounds, roundTime: roundTime, restTime: restTime).dropLast()
-            return Observable.concat(workoutConfig)
+            return multiRoundSet(rounds: rounds, roundTime: roundTime, restTime: restTime).dropLast().flatMap { $0 }
+            
+        case (2..., 1...):
+            return multiLapSet(laps: laps, rounds: rounds, roundTime: roundTime, restTime: restTime).dropLast().flatMap { $0 }
             
         default:
             fatalError(
@@ -111,22 +119,6 @@ private extension TimerMainViewModel {
         }
         
     }
-    
-    static func createPairedActionRestLap(rounds: Int, roundTime: Int, restTime: Int) -> [Observable<Int>] {
-        return (0..<rounds)
-            .map { _ in return [runTimer(with: roundTime), runTimer(with: restTime)] }
-            .flatMap { $0 }
-    }
-    
-    static func createMultiLapWorkoutConfig(laps: Int, rounds: Int, roundTime: Int, restTime: Int) -> [Observable<Int>] {
-        return (0..<laps)
-            .map { _ in return createPairedActionRestLap(rounds: rounds, roundTime: roundTime, restTime: restTime) }
-            .flatMap { $0 }
-    }
 }
 
-enum WorkoutState {
-    case running(Bool)
-    case paused(Bool)
-    
-}
+
