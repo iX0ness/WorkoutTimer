@@ -26,6 +26,7 @@ class TimerMainViewController: UIViewController, Storyboarded {
         view.backgroundColor = .yellow
         setupTimeView()
         bindState()
+        navigationController?.isNavigationBarHidden = true
     }
     
     @IBAction func controllWorkoutFlow(_ sender: UIButton) {
@@ -34,6 +35,7 @@ class TimerMainViewController: UIViewController, Storyboarded {
     
     @IBAction func stopWorkout(_ sender: UIButton) {
         disposable?.dispose()
+        navigationController?.popViewController(animated: true)
     }
     
     private var disposeBag = DisposeBag()
@@ -44,7 +46,7 @@ private extension TimerMainViewController {
     func setupTimeView() {
         timeView.backgroundColor = ColorPalette.subprimary.color
         timeView.clipsToBounds = true
-        timeView.layer.cornerRadius = 10
+        timeView.layer.cornerRadius = timeView.frame.width / 2
         timeLabel.textColor = ColorPalette.primary.color
     }
     
@@ -52,9 +54,11 @@ private extension TimerMainViewController {
         viewModel?.outputs.workoutState.subscribe(onNext: { [weak self] state in
             switch state {
             case .paused:
+                self?.view.backgroundColor = Colors.red
                 self?.setFlowControlButtonImage(for: state)
                 self?.disposable?.dispose()
             case .running:
+                self?.view.backgroundColor = Colors.green
                 self?.setFlowControlButtonImage(for: state)
                 self?.runTimer()
             }
@@ -66,9 +70,11 @@ private extension TimerMainViewController {
         disposable = viewModel.outputs.timer
             .takeWhile { _ in viewModel.outputs.isTimeRemaining }
             .map { _ in viewModel.outputs.time }
-            .subscribe (onNext: { time in
+            .subscribe(onNext: { time in
                 viewModel.inputs.makeSound()
                 self.timeLabel.text = String(time)
+            }, onCompleted: {
+                self.navigationController?.popViewController(animated: true)
             })
     }
     
@@ -76,14 +82,19 @@ private extension TimerMainViewController {
         switch state {
         case .paused:
             self.flowControlButton.setImage(
-                UIImage(named: "play-button"),
+                UIImage(named: "button-play"),
                 for: .normal
             )
         case .running:
             self.flowControlButton.setImage(
-                UIImage(named: "pause"),
+                UIImage(named: "button-pause"),
                 for: .normal)
         }
+    }
+    
+    enum Colors {
+        static let green = UIColor(hexString: "1BBC9B")
+        static let red = UIColor(hexString: "E64C66")
     }
 }
 
