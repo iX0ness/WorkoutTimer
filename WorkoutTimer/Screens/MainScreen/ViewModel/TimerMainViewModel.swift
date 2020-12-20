@@ -8,10 +8,9 @@
 
 import Foundation
 import RxSwift
-import AVFoundation
 
 protocol TimerMainViewModelInputs {
-    func makeSound()
+    func makeSound(for time: Int)
     func changeState()
 }
 
@@ -34,7 +33,8 @@ class TimerMainViewModel: TimerMainViewModelType, TimerMainViewModelInputs, Time
     var isTimeRemaining: Bool { !workout.isEmpty }
     var time: Int { workout.removeLast() }
     
-    init(workout: Workout) {
+    init(workout: Workout, player: SoundPlayable) {
+        self.player = player
         self.workout = configureWorkout(
             laps: workout.laps,
             rounds: workout.rounds,
@@ -42,8 +42,15 @@ class TimerMainViewModel: TimerMainViewModelType, TimerMainViewModelInputs, Time
             restTime: Int(workout.restTime))
     }
     
-    func makeSound() {
-        produceTickSound()
+    func makeSound(for time: Int) {
+        switch time {
+        case 4...:
+            player.playSound(of: .tick)
+        case 0...3:
+            player.playSound(of: .deepTick)
+        default:
+            break
+        }
     }
     
     func changeState() {
@@ -60,29 +67,15 @@ class TimerMainViewModel: TimerMainViewModelType, TimerMainViewModelInputs, Time
     }
     
     private var workout: [Int] = []
-    private var soundPlayer: AVAudioPlayer?
+    private var player: SoundPlayable
     
     var inputs: TimerMainViewModelInputs { return self }
     var outputs: TimerMainViewModelOutputs { return self }
 }
 
-
-private extension TimerMainViewModel {
-    func produceTickSound() {
-        let path = Bundle.main.path(forResource: "tick.mp3", ofType: nil)!
-        let url = URL(fileURLWithPath: path)
-        do {
-            soundPlayer = try AVAudioPlayer(contentsOf: url)
-            soundPlayer?.play()
-        } catch {
-            print("Couldn't load file")
-        }
-    }
-}
-
 // MARK: - Workout Configurations
 
-extension TimerMainViewModel {
+private extension TimerMainViewModel {
     func set(roundTime: Int, restTime: Int) -> [[Int]] {
         return [(0...roundTime).map { $0 }, (0...restTime).map { $0 }]
     }

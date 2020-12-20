@@ -40,7 +40,7 @@ class MainCoordinator: Coordinator {
 
     func showCountdownTimerViewController(for workout: Workout) {
         let workoutSettingsViewController = TimerMainViewController.instantiate()
-        workoutSettingsViewController.viewModel = TimerMainViewModel(workout: workout)
+        workoutSettingsViewController.viewModel = TimerMainViewModel(workout: workout, player: SoundPlayer())
         navigationController.pushViewController(workoutSettingsViewController, animated: true)
     }
 }

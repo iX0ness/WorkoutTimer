@@ -21,7 +21,10 @@ enum ColorPalette {
     case header
     /// Gray shade
     case placeholder
-    
+    /// Workout paused
+    case pause
+    /// Workout in progress
+    case running
     
     var color: UIColor {
         switch self {
@@ -31,6 +34,8 @@ enum ColorPalette {
         case .subsecondary: return UIColor(hexString: "#FB5D61")
         case .header: return UIColor(hexString: "#F1F1F3")
         case .placeholder: return UIColor(hexString: "#E8E8E8")
+        case .pause: return UIColor(hexString: "E64C66")
+        case .running: return UIColor(hexString: "1BBC9B")
         }
     }
 }

@@ -34,12 +34,12 @@ class TimerMainViewController: UIViewController, Storyboarded {
     }
     
     @IBAction func stopWorkout(_ sender: UIButton) {
-        disposable?.dispose()
+        timerSubscription?.dispose()
         navigationController?.popViewController(animated: true)
     }
     
     private var disposeBag = DisposeBag()
-    private var disposable: Disposable?
+    private var timerSubscription: Disposable?
 }
 
 private extension TimerMainViewController {
@@ -54,11 +54,11 @@ private extension TimerMainViewController {
         viewModel?.outputs.workoutState.subscribe(onNext: { [weak self] state in
             switch state {
             case .paused:
-                self?.view.backgroundColor = Colors.red
+                self?.view.backgroundColor = ColorPalette.pause.color
                 self?.setFlowControlButtonImage(for: state)
-                self?.disposable?.dispose()
+                self?.timerSubscription?.dispose()
             case .running:
-                self?.view.backgroundColor = Colors.green
+                self?.view.backgroundColor = ColorPalette.running.color
                 self?.setFlowControlButtonImage(for: state)
                 self?.runTimer()
             }
@@ -67,11 +67,11 @@ private extension TimerMainViewController {
     
     func runTimer() {
         guard let viewModel = viewModel else { return }
-        disposable = viewModel.outputs.timer
+        timerSubscription = viewModel.outputs.timer
             .takeWhile { _ in viewModel.outputs.isTimeRemaining }
             .map { _ in viewModel.outputs.time }
             .subscribe(onNext: { time in
-                viewModel.inputs.makeSound()
+                viewModel.inputs.makeSound(for: time)
                 self.timeLabel.text = String(time)
             }, onCompleted: {
                 self.navigationController?.popViewController(animated: true)
@@ -90,11 +90,6 @@ private extension TimerMainViewController {
                 UIImage(named: "button-pause"),
                 for: .normal)
         }
-    }
-    
-    enum Colors {
-        static let green = UIColor(hexString: "1BBC9B")
-        static let red = UIColor(hexString: "E64C66")
     }
 }
 
