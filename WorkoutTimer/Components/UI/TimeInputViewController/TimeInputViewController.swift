@@ -20,16 +20,13 @@ enum Input {
 class TimeInputViewController: UIViewController, Storyboarded, InputConfigurable {
     
     // MARK: - IB Outlets
-    
-    
+
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var titleLabel: UILabel!
     
     @IBOutlet weak var dismissButton: UIButton!
     @IBOutlet weak var confirmButton: UIButton!
-    
-    // MARK: - View Properties -
-    
+        
     // MARK: Main Input Container
     
     lazy var mainInputStackView: UIStackView = {
@@ -88,40 +85,6 @@ class TimeInputViewController: UIViewController, Storyboarded, InputConfigurable
         return label
     }()
     
-    // MARK: - Object properties
-    
-    var primaryTextFiedInput: Int {
-        return zeroOrInputNumber(primaryTextField.text)
-    }
-    
-    var secondaryTextFiedInput: Int {
-        return zeroOrInputNumber(secondaryTextField.text)
-    }
-    
-    private var unit = Unit(initialValue: 0, 0...99)
-    
-    var popupTitle: String
-    var inputType: InputType
-    var inputParameter: InputParameter
-    
-    // MARK: - Object Lifecycle
-    
-    required init?(coder: NSCoder) {
-        self.popupTitle = ""
-        self.inputType = .double
-        self.inputParameter = .workoutTime
-        super.init(coder: coder)
-    }
-    
-    deinit { print("Deinitialized") }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupViewShape()
-        configureView()
-        titleLabel.text = popupTitle
-    }
-    
     // MARK: - IB Actions
     
     @IBAction func dismissButtonAction(_ sender: Any) {
@@ -136,6 +99,37 @@ class TimeInputViewController: UIViewController, Storyboarded, InputConfigurable
         dismiss(animated: true)
     }
     
+    // MARK: - Object properties
+
+    var popupTitle: String
+    var inputType: InputType
+    var inputParameter: InputParameter
+    
+    var primaryTextFiedInput: Int {
+        return zeroOrInputNumber(primaryTextField.text)
+    }
+    
+    var secondaryTextFiedInput: Int {
+        return zeroOrInputNumber(secondaryTextField.text)
+    }
+    
+    // MARK: - Object Lifecycle
+    
+    required init?(coder: NSCoder) {
+        self.popupTitle = ""
+        self.inputType = .double
+        self.inputParameter = .workoutTime
+        super.init(coder: coder)
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupViewShape()
+        configureView()
+        titleLabel.text = popupTitle
+    }
+    
+    private var unit = Unit(initialValue: 0, 0...99)
 }
 
 // MARK: - UI Settings

@@ -16,9 +16,6 @@ class WorkoutSettingsViewController: UIViewController, Storyboarded {
     weak var coordinator: MainCoordinator?
     var viewModel: WorkoutSettingsViewModelType?
     
-    
-    let disposeBag = DisposeBag()
-    
     // MARK: - IB Outlets
     
     @IBOutlet weak var workConfigView: WorkoutItemView!
@@ -31,27 +28,7 @@ class WorkoutSettingsViewController: UIViewController, Storyboarded {
     @IBOutlet weak var totalWorkoutTimeLabel: UILabel!
     @IBOutlet weak var startWorkoutButton: UIButton!
     
-    // MARK: - Object Lifecycle
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupView()
-        observeWorkoutConfiguration()
-    }
-    
     // MARK: - IB Actions
-    
-    @IBAction func startWorkoutAction(_ sender: UIButton) {
-        
-    }
-    
-    // MARK: - Object Methods
-    
-    func setupView() {
-        view.backgroundColor = ColorPalette.subsecondary.color
-        setupTotalWorkoutView()
-        activateStartWorkoutButtonConstraints()
-    }
     
     @IBAction func tapGestureWorkoutConfigView(_ sender: UITapGestureRecognizer) {
         guard let popup = showPopup(
@@ -97,6 +74,24 @@ class WorkoutSettingsViewController: UIViewController, Storyboarded {
         
     }
     
+    // MARK: - Object Lifecycle
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupView()
+        observeWorkoutConfiguration()
+    }
+    
+    // MARK: - Object Methods
+    
+    func setupView() {
+        view.backgroundColor = ColorPalette.subsecondary.color
+        setupTotalWorkoutView()
+        activateStartWorkoutButtonConstraints()
+    }
+    
+    private let disposeBag = DisposeBag()
+    
     private func showPopup(title: String, inputType: InputType, inputParameter: InputParameter) -> TimeInputViewController? {
         guard let popupViewController = coordinator?.showInputPopup(title, inputType, inputParameter) else { return nil }
         present(popupViewController, animated: true, completion: nil)
@@ -126,12 +121,15 @@ private extension WorkoutSettingsViewController {
             startWorkoutButton.widthAnchor.constraint(equalToConstant: buttonSide),
             startWorkoutButton.heightAnchor.constraint(equalToConstant: buttonSide),
             startWorkoutButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            startWorkoutButton.bottomAnchor.constraint(equalTo: workoutConfigStackView.topAnchor, constant: bottomAnchorConstant)
+            startWorkoutButton.bottomAnchor.constraint(
+                equalTo: workoutConfigStackView.topAnchor,
+                constant: bottomAnchorConstant
+            )
         ])
     }
 }
 
-extension WorkoutSettingsViewController {
+private extension WorkoutSettingsViewController {
     func handleInput(of popup: TimeInputViewController) {
         popup.confirmButton.rx.tap.bind { [weak popup] in
             guard let popup = popup else { return }
@@ -174,8 +172,5 @@ extension WorkoutSettingsViewController {
             .subscribe { [weak self] time in
                 self?.totalWorkoutTimeLabel.text = time
             }.disposed(by: disposeBag)
-        
     }
-    
-    
 }
