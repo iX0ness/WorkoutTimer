@@ -294,7 +294,6 @@
                                 <state key="normal" image="power-button-4"/>
                                 <connections>
                                     <action selector="startWorkout:" destination="jJv-MO-4da" eventType="touchUpInside" id="emL-GI-kyX"/>
-                                    <action selector="startWorkoutAction:" destination="jJv-MO-4da" eventType="touchUpInside" id="DPM-Ds-Jhv"/>
                                 </connections>
                             </button>
                         </subviews>
