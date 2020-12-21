@@ -29,7 +29,9 @@ extension InputConfigurable where Self: TimeInputViewController {
         constructHierarchy()
         activateConstraints()
         switch inputType {
-        case .single(primaryPlaceholder: let primaryPlaceholderText, priparyDescription: let primaryDescriptionText):
+        case .single(
+                primaryPlaceholder: let primaryPlaceholderText,
+                priparyDescription: let primaryDescriptionText):
             configureTextFields(primaryPlaceholder: primaryPlaceholderText)
             configureDescriptionLabels(primaryLabelText: primaryDescriptionText)
         case .double:

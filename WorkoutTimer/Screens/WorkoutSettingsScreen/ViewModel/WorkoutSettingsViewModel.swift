@@ -43,13 +43,13 @@ class WorkoutSettingsViewModel: WorkoutSettingsViewModelType, WorkoutSettingsVie
     
     func setWorkoutTime(_ minutes: Int, _ seconds: Int) {
         _roundTime = toSeconds(minutes: minutes, seconds: seconds)
-        roundTime.onNext(string(of: _roundTime))
+        roundTime.onNext(string(of: TimeInterval(_roundTime)))
         workout.onNext(Workout(laps: _laps, rounds: _sets, roundTime: _roundTime, restTime: _restTime))
     }
     
     func setRestTime(_ minutes: Int, _ seconds: Int) {
         _restTime = toSeconds(minutes: minutes, seconds: seconds)
-        restTime.onNext(string(of: _restTime))
+        restTime.onNext(string(of: TimeInterval(_restTime)))
         workout.onNext(Workout(laps: _laps, rounds: _sets, roundTime: _roundTime, restTime: _restTime))
     }
     
@@ -65,29 +65,29 @@ class WorkoutSettingsViewModel: WorkoutSettingsViewModelType, WorkoutSettingsVie
         workout.onNext(Workout(laps: _laps, rounds: _sets, roundTime: _roundTime, restTime: _restTime))
     }
     
-    private var _roundTime: Double = 0 {
+    private var _roundTime: Int = 0 {
         didSet {
-            totalWorkoutTime.onNext(string(of: totalTime))
+            totalWorkoutTime.onNext(string(of: TimeInterval(totalTime)))
         }
     }
-    private var _restTime: Double = 0 {
+    private var _restTime: Int = 0 {
         didSet {
-            totalWorkoutTime.onNext(string(of: totalTime))
+            totalWorkoutTime.onNext(string(of: TimeInterval(totalTime)))
         }
     }
     private var _sets: Int = 1 {
         didSet {
-            totalWorkoutTime.onNext(string(of: totalTime))
+            totalWorkoutTime.onNext(string(of: TimeInterval(totalTime)))
         }
     }
     private var _laps: Int = 1 {
         didSet {
-            totalWorkoutTime.onNext(string(of: totalTime))
+            totalWorkoutTime.onNext(string(of: TimeInterval(totalTime)))
         }
     }
     
-    private var totalTime: Double {
-        (_roundTime + _restTime) * Double(_sets * _laps)
+    private var totalTime: Int {
+        (_roundTime + _restTime) * (_sets * _laps)
     }
     
     var inputs: WorkoutSettingsViewModelInputs { return self }
@@ -104,14 +104,14 @@ extension WorkoutSettingsViewModel {
         }
     }
     
-    func toSeconds(minutes: Int, seconds: Int) -> Double {
-        return Double(60 * minutes + seconds)
+    func toSeconds(minutes: Int, seconds: Int) -> Int {
+        return 60 * minutes + seconds
     }
 }
 
 struct Workout {
     var laps: Int
     var rounds: Int
-    var roundTime: Double
-    var restTime: Double
+    var roundTime: Int
+    var restTime: Int
 }

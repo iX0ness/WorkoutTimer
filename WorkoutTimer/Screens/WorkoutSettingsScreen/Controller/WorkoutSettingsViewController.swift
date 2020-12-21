@@ -135,7 +135,9 @@ private extension WorkoutSettingsViewController {
             guard let popup = popup else { return }
             switch popup.inputParameter {
             case .workoutTime:
-                self.viewModel?.inputs.setWorkoutTime(popup.primaryTextFiedInput, popup.secondaryTextFiedInput)
+                self.viewModel?.inputs.setWorkoutTime(
+                    popup.primaryTextFiedInput,
+                    popup.secondaryTextFiedInput)
             case .restTime:
                 self.viewModel?.inputs.setRestTime(popup.primaryTextFiedInput, popup.secondaryTextFiedInput)
             case .sets:
