@@ -34,23 +34,20 @@ class WorkoutSettingsViewController: UIViewController, Storyboarded {
         guard let popup = showPopup(
             title: "Enter time",
             inputType: .double,
-            inputParameter: .workoutTime
-        ) else { return }
+            inputParameter: .workoutTime) else { return }
         handleInput(of: popup)
     }
     @IBAction func tapGestureRestConfigView(_ sender: UITapGestureRecognizer) {
         guard let popup = showPopup(
                 title: "Enter time",
                 inputType: .double,
-                inputParameter: .restTime)
-        else { return }
+                inputParameter: .restTime) else { return }
         handleInput(of: popup)
-        
     }
     
     @IBAction func tapGestureSetsConfigView(_ sender: UITapGestureRecognizer) {
         guard let popup = showPopup(
-                title: "Enter sets",
+                title: "Enter rounds",
                 inputType: .single(primaryPlaceholder: "1",
                                    priparyDescription: "sets"),
                 inputParameter: .sets) else { return }
@@ -67,11 +64,11 @@ class WorkoutSettingsViewController: UIViewController, Storyboarded {
     }
     
     @IBAction func startWorkout(_ sender: UIButton) {
-        viewModel?.outputs.workout.subscribe(onNext: { (workout) in
-            guard workout.roundTime != 0 else { return }
-            self.coordinator?.showCountdownTimerViewController(for: workout)
-        }).disposed(by: disposeBag)
+        guard let value = try? viewModel?.outputs.workout.value(),
+              let workout = value as? Workout,
+              workout.readyToStart else { return }
         
+        self.coordinator?.showCountdownTimerViewController(for: workout)
     }
     
     // MARK: - Object Lifecycle
@@ -81,27 +78,18 @@ class WorkoutSettingsViewController: UIViewController, Storyboarded {
         setupView()
         observeWorkoutConfiguration()
     }
-    
-    // MARK: - Object Methods
-    
-    func setupView() {
-        view.backgroundColor = ColorPalette.subsecondary.color
-        setupTotalWorkoutView()
-        activateStartWorkoutButtonConstraints()
-    }
-    
+
     private let disposeBag = DisposeBag()
-    
-    private func showPopup(title: String, inputType: InputType, inputParameter: InputParameter) -> TimeInputViewController? {
-        guard let popupViewController = coordinator?.showInputPopup(title, inputType, inputParameter) else { return nil }
-        present(popupViewController, animated: true, completion: nil)
-        return popupViewController
-    }
 }
 
 // MARK: - UI Settings
 
 private extension WorkoutSettingsViewController {
+    func setupView() {
+        view.backgroundColor = ColorPalette.subsecondary.color
+        setupTotalWorkoutView()
+        activateStartWorkoutButtonConstraints()
+    }
     
     func setupTotalWorkoutView() {
         totalWorkoutTimeView.backgroundColor = ColorPalette.subprimary.color
@@ -124,12 +112,15 @@ private extension WorkoutSettingsViewController {
             startWorkoutButton.bottomAnchor.constraint(
                 equalTo: workoutConfigStackView.topAnchor,
                 constant: bottomAnchorConstant
-            )
+            ),
         ])
     }
 }
 
+// MARK: - Object Functions
+
 private extension WorkoutSettingsViewController {
+    
     func handleInput(of popup: TimeInputViewController) {
         popup.confirmButton.rx.tap.bind { [weak popup] in
             guard let popup = popup else { return }
@@ -141,38 +132,28 @@ private extension WorkoutSettingsViewController {
             case .restTime:
                 self.viewModel?.inputs.setRestTime(popup.primaryTextFiedInput, popup.secondaryTextFiedInput)
             case .sets:
-                self.viewModel?.inputs.setSets(popup.primaryTextFiedInput)
+                self.viewModel?.inputs.setRounds(popup.primaryTextFiedInput)
             case .laps:
                 self.viewModel?.inputs.setLaps(popup.primaryTextFiedInput)
             }
-            
         }.disposed(by: disposeBag)
+        
     }
     
     func observeWorkoutConfiguration() {
-        viewModel?.outputs.roundTime
-            .subscribe { [weak self] time in
-                self?.workConfigView.valueText = time
-            }.disposed(by: disposeBag)
-        
-        viewModel?.outputs.restTime
-            .subscribe { [weak self] time in
-                self?.restConfigView.valueText = time
-            }.disposed(by: disposeBag)
-        
-        viewModel?.outputs.sets
-            .subscribe { [weak self] sets in
-                self?.setsConfigView.valueText = sets
-            }.disposed(by: disposeBag)
-        
-        viewModel?.outputs.laps
-            .subscribe { [weak self] laps in
-                self?.lapsConfigView.valueText = laps
-            }.disposed(by: disposeBag)
-        
-        viewModel?.outputs.totalWorkoutTime
-            .subscribe { [weak self] time in
-                self?.totalWorkoutTimeLabel.text = time
-            }.disposed(by: disposeBag)
+        viewModel?.outputs.workout
+            .subscribe(onNext: { [weak self] workout in
+                self?.lapsConfigView.valueText = workout._laps
+                self?.setsConfigView.valueText = workout._rounds
+                self?.restConfigView.valueText = workout._restTime
+                self?.workConfigView.valueText = workout._roundTime
+                self?.totalWorkoutTimeLabel.text = workout._totalTime
+            }).disposed(by: disposeBag)
+    }
+    
+    func showPopup(title: String, inputType: InputType, inputParameter: InputParameter) -> TimeInputViewController? {
+        guard let popupViewController = coordinator?.showInputPopup(title, inputType, inputParameter) else { return nil }
+        present(popupViewController, animated: true, completion: nil)
+        return popupViewController
     }
 }

@@ -20,6 +20,7 @@
 		52A521EE258E1C3500FE51B8 /* deepTick.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 52A521EC258E1C3500FE51B8 /* deepTick.mp3 */; };
 		52A521EF258E1C3500FE51B8 /* tick.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 52A521ED258E1C3500FE51B8 /* tick.mp3 */; };
 		52A521F2258E1FC600FE51B8 /* SoundPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A521F1258E1FC600FE51B8 /* SoundPlayer.swift */; };
+		52BDA20D2592222F0014B53B /* Workout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52BDA20C2592222F0014B53B /* Workout.swift */; };
 		8B78CD4524EC46E400C819E2 /* UIScreen+Dimension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B78CD4424EC46E400C819E2 /* UIScreen+Dimension.swift */; };
 		8B80EF5024F04946009FDB9D /* WorkoutConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B80EF4F24F04946009FDB9D /* WorkoutConfiguration.swift */; };
 		8B80EF5324F054D0009FDB9D /* Unit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B80EF5224F054D0009FDB9D /* Unit.swift */; };
@@ -48,6 +49,7 @@
 		52A521EC258E1C3500FE51B8 /* deepTick.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = deepTick.mp3; sourceTree = "<group>"; };
 		52A521ED258E1C3500FE51B8 /* tick.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = tick.mp3; sourceTree = "<group>"; };
 		52A521F1258E1FC600FE51B8 /* SoundPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundPlayer.swift; sourceTree = "<group>"; };
+		52BDA20C2592222F0014B53B /* Workout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Workout.swift; sourceTree = "<group>"; };
 		8B78CD4424EC46E400C819E2 /* UIScreen+Dimension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScreen+Dimension.swift"; sourceTree = "<group>"; };
 		8B80EF4F24F04946009FDB9D /* WorkoutConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutConfiguration.swift; sourceTree = "<group>"; };
 		8B80EF5224F054D0009FDB9D /* Unit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Unit.swift; sourceTree = "<group>"; };
@@ -178,6 +180,7 @@
 				8B80EF5124F053ED009FDB9D /* PropertyWrappers */,
 				8B80EF4F24F04946009FDB9D /* WorkoutConfiguration.swift */,
 				8B80EF5624F05845009FDB9D /* Time.swift */,
+				52BDA20C2592222F0014B53B /* Workout.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -349,6 +352,7 @@
 			files = (
 				323B704024E6E82500108AB2 /* UIViewController+Storyboarded.swift in Sources */,
 				3268BD6C24E7F6DF00DD4FA9 /* UIColor+HEX.swift in Sources */,
+				52BDA20D2592222F0014B53B /* Workout.swift in Sources */,
 				8B78CD4524EC46E400C819E2 /* UIScreen+Dimension.swift in Sources */,
 				8BE1CEAE24EDB84200D9A354 /* TimeInputViewController.swift in Sources */,
 				8BEF532524E6B4DF00220894 /* TimerMainViewController.swift in Sources */,
