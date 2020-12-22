@@ -95,7 +95,7 @@ class WorkoutSettingsViewModel: WorkoutSettingsViewModelType, WorkoutSettingsVie
 }
 
 // MARK: - Helper functions
-extension WorkoutSettingsViewModel {
+private extension WorkoutSettingsViewModel {
     func string(of interval: TimeInterval) -> String {
         if interval > 3599 {
             return DateComponentsFormatter.fullStyle.string(from: interval) ?? ""
