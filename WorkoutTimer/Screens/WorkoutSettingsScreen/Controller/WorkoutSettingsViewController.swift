@@ -76,7 +76,7 @@ class WorkoutSettingsViewController: UIViewController, Storyboarded {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
-        observeWorkoutConfiguration()
+        bindWorkout()
     }
 
     private let disposeBag = DisposeBag()
@@ -140,7 +140,7 @@ private extension WorkoutSettingsViewController {
         
     }
     
-    func observeWorkoutConfiguration() {
+    func bindWorkout() {
         viewModel?.outputs.workout
             .subscribe(onNext: { [weak self] workout in
                 self?.lapsConfigView.valueText = workout._laps
