@@ -30,16 +30,24 @@ class TimerMainViewController: UIViewController, Storyboarded {
     }
     
     @IBAction func controllWorkoutFlow(_ sender: UIButton) {
-        viewModel?.inputs.changeState()
+        switch state {
+        case .paused:
+            viewModel?.inputs.runTimer()
+        case .inProgress:
+            viewModel?.inputs.pauseTimer()
+        default:
+            break
+        }
     }
     
     @IBAction func stopWorkout(_ sender: UIButton) {
-        timerSubscription?.dispose()
-        navigationController?.popViewController(animated: true)
+        viewModel?.inputs.stopTimer()
+        
     }
     
     private var disposeBag = DisposeBag()
     private var timerSubscription: Disposable?
+    private var state: WorkoutState?
 }
 
 private extension TimerMainViewController {
@@ -51,31 +59,49 @@ private extension TimerMainViewController {
     }
     
     func bindState() {
-        viewModel?.outputs.workoutState.subscribe(onNext: { [weak self] state in
+        viewModel?.outputs.state.subscribe(onNext: { [weak self] state in
+            self?.state = state
             self?.setFlowControlButtonImage(for: state)
-            switch state {
-            case .paused:
-                self?.timerSubscription?.dispose()
-            case .running:
-                self?.runTimer()
+            self?.setBackgroundColor(for: state)
+            self?.configureLabels(for: state)
+            if case WorkoutState.finished = state {
+                self?.navigationController?.popViewController(animated: true)
             }
         }).disposed(by: disposeBag)
     }
     
-    func runTimer() {
-        guard let viewModel = viewModel else { return }
-        timerSubscription = viewModel.outputs.timer
-            .takeWhile { _ in viewModel.outputs.isWorkoutCompleted }
-            .map { _ in viewModel.outputs.phase }
-            .subscribe(onNext: { phase in
-                viewModel.inputs.makeSound(for: phase.value)
-                self.setBackgroundColor(for: phase)
-                self.timeLabel.text = String(phase.value)
-            }, onCompleted: {
-                self.navigationController?.popViewController(animated: true)
-            }, onDisposed: {
-                self.view.backgroundColor = ColorPalette.pause.color
-            })
+//    func bindState() {
+//                viewModel?.outputs.workoutState.subscribe(onNext: { [weak self] state in
+//                    self?.setFlowControlButtonImage(for: state)
+//                    switch state {
+//                    case .paused:
+//                        self?.timerSubscription?.dispose()
+//                    case .running:
+//                        self?.runTimer()
+//                    }
+//                }).disposed(by: disposeBag)
+//    }
+    
+    //    func runTimer() {
+    //        guard let viewModel = viewModel else { return }
+    //        timerSubscription = viewModel.outputs.timer
+    //            .takeWhile { _ in viewModel.outputs.isWorkoutCompleted }
+    //            .map { _ in viewModel.outputs.phase }
+    //            .subscribe(onNext: { phase in
+    //                viewModel.inputs.makeSound(for: phase.value)
+    //                self.setBackgroundColor(for: phase)
+    //                self.timeLabel.text = String(phase.value)
+    //            }, onCompleted: {
+    //                self.navigationController?.popViewController(animated: true)
+    //            }, onDisposed: {
+    //                self.view.backgroundColor = ColorPalette.pause.color
+    //            })
+    //    }
+    
+    func configureLabels(for state: WorkoutState) {
+        if case let WorkoutState.inProgress(phase) = state {
+            self.timeLabel.text = String(phase.value)
+        }
     }
     
     func setFlowControlButtonImage(for state: WorkoutState) {
@@ -85,21 +111,30 @@ private extension TimerMainViewController {
                 UIImage(named: "button-play"),
                 for: .normal
             )
-        case .running:
+        case .inProgress:
             self.flowControlButton.setImage(
                 UIImage(named: "button-pause"),
                 for: .normal)
+            
+        default:
+            break
         }
     }
     
-    func setBackgroundColor(for phase: WorkoutPhase) {
-        switch phase {
-        case .action:
-            view.backgroundColor = ColorPalette.running.color
-        case .rest:
-            view.backgroundColor = ColorPalette.rest.color
+    func setBackgroundColor(for state: WorkoutState) {
+        switch state {
+        case .paused: view.backgroundColor = ColorPalette.pause.color
+        case .inProgress(let phase):
+            switch phase {
+            case .action: view.backgroundColor = ColorPalette.running.color
+            case .rest: view.backgroundColor = ColorPalette.rest.color
+            }
+        default: break
+            
         }
     }
+    
+    
 }
 
 

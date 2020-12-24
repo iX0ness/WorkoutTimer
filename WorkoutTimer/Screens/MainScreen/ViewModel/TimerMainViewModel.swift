@@ -11,14 +11,13 @@ import RxSwift
 
 protocol TimerMainViewModelInputs {
     func makeSound(for time: Int)
-    func changeState()
+    func stopTimer()
+    func runTimer()
+    func pauseTimer()
 }
 
 protocol TimerMainViewModelOutputs {
-    var timer: Observable<Int> { get }
-    var workoutState: BehaviorSubject<WorkoutState> { get }
-    var isWorkoutCompleted: Bool { get }
-    var phase: WorkoutPhase { get }
+    var state: PublishSubject<WorkoutState> { get }
 }
 
 protocol TimerMainViewModelType {
@@ -26,20 +25,25 @@ protocol TimerMainViewModelType {
     var outputs: TimerMainViewModelOutputs { get}
 }
 
-class TimerMainViewModel: TimerMainViewModelType, TimerMainViewModelInputs, TimerMainViewModelOutputs {
+class TimerMainViewModel: TimerMainViewModelType,
+                          TimerMainViewModelInputs,
+                          TimerMainViewModelOutputs {
     
-    let workoutState: BehaviorSubject<WorkoutState> = BehaviorSubject(value: .running)
-    let timer = Observable<Int>.interval(RxTimeInterval.seconds(1), scheduler: MainScheduler.instance)
+    
+    var state: PublishSubject<WorkoutState> = PublishSubject()
     var isWorkoutCompleted: Bool { !workout.isEmpty }
     var phase: WorkoutPhase { workout.removeLast() }
     
-    init(workout: Workout, player: SoundPlayable) {
+    init(workout: Workout, player: SoundPlayable, configurator: WorkoutConfigurator.Type) {
         self.player = player
-        self.workout = configureWorkout(
+        self.workout = configurator.configureWorkout(
             laps: workout.laps,
             rounds: workout.rounds,
-            roundTime: Int(workout.roundTime),
-            restTime: Int(workout.restTime))
+            roundTime: workout.roundTime,
+            restTime: workout.restTime)
+        print(self.workout)
+        runTimer()
+        
     }
     
     func makeSound(for time: Int) {
@@ -53,65 +57,38 @@ class TimerMainViewModel: TimerMainViewModelType, TimerMainViewModelInputs, Time
         }
     }
     
-    func changeState() {
-        guard let state = try? workoutState.value() else {
-            fatalError("Workout must have some entry state")
-        }
-        
-        switch state {
-        case .paused:
-            self.workoutState.onNext(.running)
-        case .running:
-            self.workoutState.onNext(.paused)
-        }
+    func runTimer() {
+        disposable = timer
+            .takeWhile { _ in !self.workout.isEmpty }
+            .map { _ in self.phase }
+            .subscribe(onNext: { phase in
+                self.state.onNext(.inProgress(phase))
+            }, onCompleted: {
+                self.state.onNext(.finished)
+            }, onDisposed: {
+                print("Disposed")
+            })
     }
     
+    func pauseTimer() {
+        state.onNext(.paused)
+        disposable?.dispose()
+    }
+    
+    func stopTimer() {
+        disposable?.dispose()
+        state.onNext(.finished)
+    }
+    
+    private var disposable: Disposable?
+    private let timer = Observable<Int>
+        .interval(RxTimeInterval.seconds(1),
+                  scheduler: MainScheduler.instance)
     private var workout: [WorkoutPhase] = []
     private var player: SoundPlayable
     
     var inputs: TimerMainViewModelInputs { return self }
     var outputs: TimerMainViewModelOutputs { return self }
-}
-
-// MARK: - Workout Configurations
-
-private extension TimerMainViewModel {
-    func set(roundTime: Int, restTime: Int) -> [[WorkoutPhase]] {
-        return [(0...roundTime).map { WorkoutPhase.action($0) }, (0...restTime).map { WorkoutPhase.rest($0) }]
-    }
-    
-    func multiRoundSet(rounds: Int, roundTime: Int, restTime: Int) -> [[WorkoutPhase]] {
-        return (0...rounds)
-            .map { _ in set(roundTime: roundTime, restTime: restTime) }
-            .flatMap { $0 }
-    }
-    
-    func multiLapSet(laps: Int, rounds: Int, roundTime: Int, restTime: Int) -> [[WorkoutPhase]] {
-        return (0...laps)
-            .map { _ in multiRoundSet(rounds: rounds, roundTime: roundTime, restTime: restTime) }
-            .flatMap { $0 }
-    }
-    
-    func configureWorkout(laps: Int, rounds: Int, roundTime: Int, restTime: Int) -> [WorkoutPhase] {
-        switch (laps, rounds) {
-        case (1, 1):
-            return set(roundTime: roundTime, restTime: restTime).dropLast().flatMap { $0 }
-            
-        case (1, 1...):
-            return multiRoundSet(rounds: rounds, roundTime: roundTime, restTime: restTime).dropLast().flatMap { $0 }
-            
-        case (2..., 1...):
-            return multiLapSet(laps: laps, rounds: rounds, roundTime: roundTime, restTime: restTime).dropLast().flatMap { $0 }
-            
-        default:
-            fatalError(
-                """
-            Unexpected number of laps or rounds
-            Laps: \(laps) | Rounds: \(rounds)
-            """)
-        }
-        
-    }
 }
 
 

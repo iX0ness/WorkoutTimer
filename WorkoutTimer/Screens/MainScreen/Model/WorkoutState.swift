@@ -9,8 +9,9 @@
 import Foundation
 
 enum WorkoutState {
-    case running
+    case inProgress(WorkoutPhase)
     case paused
+    case finished
 }
 
 enum WorkoutPhase {
