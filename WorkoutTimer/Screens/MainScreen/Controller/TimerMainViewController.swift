@@ -52,14 +52,14 @@ private extension TimerMainViewController {
     
     func bindState() {
         viewModel?.outputs.workoutState.subscribe(onNext: { [weak self] state in
+            self?.setFlowControlButtonImage(for: state)
             switch state {
             case .paused:
                 self?.view.backgroundColor = ColorPalette.pause.color
-                self?.setFlowControlButtonImage(for: state)
+                
                 self?.timerSubscription?.dispose()
             case .running:
                 self?.view.backgroundColor = ColorPalette.running.color
-                self?.setFlowControlButtonImage(for: state)
                 self?.runTimer()
             }
         }).disposed(by: disposeBag)
@@ -68,11 +68,12 @@ private extension TimerMainViewController {
     func runTimer() {
         guard let viewModel = viewModel else { return }
         timerSubscription = viewModel.outputs.timer
-            .takeWhile { _ in viewModel.outputs.isTimeRemaining }
-            .map { _ in viewModel.outputs.time }
-            .subscribe(onNext: { time in
-                viewModel.inputs.makeSound(for: time)
-                self.timeLabel.text = String(time)
+            .takeWhile { _ in viewModel.outputs.isWorkoutCompleted }
+            .map { _ in viewModel.outputs.phase }
+            .subscribe(onNext: { phase in
+                
+                viewModel.inputs.makeSound(for: phase.value)
+                self.timeLabel.text = String(phase.value)
             }, onCompleted: {
                 self.navigationController?.popViewController(animated: true)
             })

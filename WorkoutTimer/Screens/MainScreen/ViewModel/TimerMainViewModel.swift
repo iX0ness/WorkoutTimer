@@ -17,8 +17,8 @@ protocol TimerMainViewModelInputs {
 protocol TimerMainViewModelOutputs {
     var timer: Observable<Int> { get }
     var workoutState: BehaviorSubject<WorkoutState> { get }
-    var isTimeRemaining: Bool { get }
-    var time: Int { get }
+    var isWorkoutCompleted: Bool { get }
+    var phase: WorkoutPhase { get }
 }
 
 protocol TimerMainViewModelType {
@@ -30,8 +30,8 @@ class TimerMainViewModel: TimerMainViewModelType, TimerMainViewModelInputs, Time
     
     let workoutState: BehaviorSubject<WorkoutState> = BehaviorSubject(value: .running)
     let timer = Observable<Int>.interval(RxTimeInterval.seconds(1), scheduler: MainScheduler.instance)
-    var isTimeRemaining: Bool { !workout.isEmpty }
-    var time: Int { workout.removeLast() }
+    var isWorkoutCompleted: Bool { !workout.isEmpty }
+    var phase: WorkoutPhase { workout.removeLast() }
     
     init(workout: Workout, player: SoundPlayable) {
         self.player = player
@@ -66,7 +66,7 @@ class TimerMainViewModel: TimerMainViewModelType, TimerMainViewModelInputs, Time
         }
     }
     
-    private var workout: [Int] = []
+    private var workout: [WorkoutPhase] = []
     private var player: SoundPlayable
     
     var inputs: TimerMainViewModelInputs { return self }
@@ -76,23 +76,23 @@ class TimerMainViewModel: TimerMainViewModelType, TimerMainViewModelInputs, Time
 // MARK: - Workout Configurations
 
 private extension TimerMainViewModel {
-    func set(roundTime: Int, restTime: Int) -> [[Int]] {
-        return [(0...roundTime).map { $0 }, (0...restTime).map { $0 }]
+    func set(roundTime: Int, restTime: Int) -> [[WorkoutPhase]] {
+        return [(0...roundTime).map { WorkoutPhase.action($0) }, (0...restTime).map { WorkoutPhase.rest($0) }]
     }
     
-    func multiRoundSet(rounds: Int, roundTime: Int, restTime: Int) -> [[Int]] {
+    func multiRoundSet(rounds: Int, roundTime: Int, restTime: Int) -> [[WorkoutPhase]] {
         return (0...rounds)
             .map { _ in set(roundTime: roundTime, restTime: restTime) }
             .flatMap { $0 }
     }
     
-    func multiLapSet(laps: Int, rounds: Int, roundTime: Int, restTime: Int) -> [[Int]] {
+    func multiLapSet(laps: Int, rounds: Int, roundTime: Int, restTime: Int) -> [[WorkoutPhase]] {
         return (0...laps)
             .map { _ in multiRoundSet(rounds: rounds, roundTime: roundTime, restTime: restTime) }
             .flatMap { $0 }
     }
     
-    func configureWorkout(laps: Int, rounds: Int, roundTime: Int, restTime: Int) -> [Int] {
+    func configureWorkout(laps: Int, rounds: Int, roundTime: Int, restTime: Int) -> [WorkoutPhase] {
         switch (laps, rounds) {
         case (1, 1):
             return set(roundTime: roundTime, restTime: restTime).dropLast().flatMap { $0 }

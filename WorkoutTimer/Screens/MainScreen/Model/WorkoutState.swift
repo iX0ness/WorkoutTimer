@@ -12,3 +12,17 @@ enum WorkoutState {
     case running
     case paused
 }
+
+enum WorkoutPhase {
+    case action(Int)
+    case rest(Int)
+    
+    var value: Int {
+        switch self {
+        case .action(let value):
+            return value
+        case .rest(let value):
+            return value
+        }
+    }
+}
