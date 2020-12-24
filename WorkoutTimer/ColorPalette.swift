@@ -23,8 +23,10 @@ enum ColorPalette {
     case placeholder
     /// Workout paused
     case pause
-    /// Workout in progress
+    /// Workout in progress phase
     case running
+    /// Workout in rest phase
+    case rest
     
     var color: UIColor {
         switch self {
@@ -36,8 +38,7 @@ enum ColorPalette {
         case .placeholder: return UIColor(hexString: "#E8E8E8")
         case .pause: return UIColor(hexString: "E64C66")
         case .running: return UIColor(hexString: "1BBC9B")
+        case .rest: return UIColor(hexString: "FAC140")
         }
     }
 }
-
-

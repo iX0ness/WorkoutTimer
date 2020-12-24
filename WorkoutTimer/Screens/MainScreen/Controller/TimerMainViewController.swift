@@ -23,7 +23,7 @@ class TimerMainViewController: UIViewController, Storyboarded {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .yellow
+        view.backgroundColor = ColorPalette.running.color
         setupTimeView()
         bindState()
         navigationController?.isNavigationBarHidden = true
@@ -55,11 +55,8 @@ private extension TimerMainViewController {
             self?.setFlowControlButtonImage(for: state)
             switch state {
             case .paused:
-                self?.view.backgroundColor = ColorPalette.pause.color
-                
                 self?.timerSubscription?.dispose()
             case .running:
-                self?.view.backgroundColor = ColorPalette.running.color
                 self?.runTimer()
             }
         }).disposed(by: disposeBag)
@@ -71,11 +68,13 @@ private extension TimerMainViewController {
             .takeWhile { _ in viewModel.outputs.isWorkoutCompleted }
             .map { _ in viewModel.outputs.phase }
             .subscribe(onNext: { phase in
-                
                 viewModel.inputs.makeSound(for: phase.value)
+                self.setBackgroundColor(for: phase)
                 self.timeLabel.text = String(phase.value)
             }, onCompleted: {
                 self.navigationController?.popViewController(animated: true)
+            }, onDisposed: {
+                self.view.backgroundColor = ColorPalette.pause.color
             })
     }
     
@@ -90,6 +89,15 @@ private extension TimerMainViewController {
             self.flowControlButton.setImage(
                 UIImage(named: "button-pause"),
                 for: .normal)
+        }
+    }
+    
+    func setBackgroundColor(for phase: WorkoutPhase) {
+        switch phase {
+        case .action:
+            view.backgroundColor = ColorPalette.running.color
+        case .rest:
+            view.backgroundColor = ColorPalette.rest.color
         }
     }
 }
