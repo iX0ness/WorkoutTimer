@@ -17,10 +17,6 @@ class TimerMainViewController: UIViewController, Storyboarded {
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var flowControlButton: UIButton!
     
-    deinit {
-        print("Deinitialized Main")
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = ColorPalette.running.color
@@ -42,7 +38,6 @@ class TimerMainViewController: UIViewController, Storyboarded {
     
     @IBAction func stopWorkout(_ sender: UIButton) {
         viewModel?.inputs.stopTimer()
-        
     }
     
     private var disposeBag = DisposeBag()
@@ -69,35 +64,7 @@ private extension TimerMainViewController {
             }
         }).disposed(by: disposeBag)
     }
-    
-//    func bindState() {
-//                viewModel?.outputs.workoutState.subscribe(onNext: { [weak self] state in
-//                    self?.setFlowControlButtonImage(for: state)
-//                    switch state {
-//                    case .paused:
-//                        self?.timerSubscription?.dispose()
-//                    case .running:
-//                        self?.runTimer()
-//                    }
-//                }).disposed(by: disposeBag)
-//    }
-    
-    //    func runTimer() {
-    //        guard let viewModel = viewModel else { return }
-    //        timerSubscription = viewModel.outputs.timer
-    //            .takeWhile { _ in viewModel.outputs.isWorkoutCompleted }
-    //            .map { _ in viewModel.outputs.phase }
-    //            .subscribe(onNext: { phase in
-    //                viewModel.inputs.makeSound(for: phase.value)
-    //                self.setBackgroundColor(for: phase)
-    //                self.timeLabel.text = String(phase.value)
-    //            }, onCompleted: {
-    //                self.navigationController?.popViewController(animated: true)
-    //            }, onDisposed: {
-    //                self.view.backgroundColor = ColorPalette.pause.color
-    //            })
-    //    }
-    
+        
     func configureLabels(for state: WorkoutState) {
         if case let WorkoutState.inProgress(phase) = state {
             self.timeLabel.text = String(phase.value)
@@ -109,13 +76,11 @@ private extension TimerMainViewController {
         case .paused:
             self.flowControlButton.setImage(
                 UIImage(named: "button-play"),
-                for: .normal
-            )
+                for: .normal)
         case .inProgress:
             self.flowControlButton.setImage(
                 UIImage(named: "button-pause"),
                 for: .normal)
-            
         default:
             break
         }
@@ -130,11 +95,6 @@ private extension TimerMainViewController {
             case .rest: view.backgroundColor = ColorPalette.rest.color
             }
         default: break
-            
         }
     }
-    
-    
 }
-
-

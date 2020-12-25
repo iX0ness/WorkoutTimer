@@ -10,35 +10,40 @@ import Foundation
 
 struct WorkoutConfigurator {
     
-    private init() {}
+    init() {}
     
-    private static func set(roundTime: Int, restTime: Int) -> [[WorkoutPhase]] {
-        return [(0...roundTime).map { WorkoutPhase.action($0) }, (0...restTime).map { WorkoutPhase.rest($0) }]
+    private func set(roundTime: Int, restTime: Int) -> [[WorkoutPhase]] {
+        return [
+            (0...roundTime).map { WorkoutPhase.action($0) },
+            (0...restTime).map { WorkoutPhase.rest($0) },
+        ]
     }
-    
-    private static func multiRoundSet(rounds: Int, roundTime: Int, restTime: Int) -> [[WorkoutPhase]] {
-        return (0...rounds)
+
+    private func multiRoundSet(rounds: Int, roundTime: Int, restTime: Int) -> [[WorkoutPhase]] {
+        return (0..<rounds)
             .map { _ in set(roundTime: roundTime, restTime: restTime) }
             .flatMap { $0 }
+            
     }
-    
-    private static func multiLapSet(laps: Int, rounds: Int, roundTime: Int, restTime: Int) -> [[WorkoutPhase]] {
-        return (0...laps)
+
+    private func multiLapSet(laps: Int, rounds: Int, roundTime: Int, restTime: Int) -> [[WorkoutPhase]] {
+        return (0..<laps)
             .map { _ in multiRoundSet(rounds: rounds, roundTime: roundTime, restTime: restTime) }
             .flatMap { $0 }
+            
     }
-    
-    static func configureWorkout(laps: Int, rounds: Int, roundTime: Int, restTime: Int) -> [WorkoutPhase] {
+
+     func configureWorkout(laps: Int, rounds: Int, roundTime: Int, restTime: Int) -> [WorkoutPhase] {
         switch (laps, rounds) {
         case (1, 1):
             return set(roundTime: roundTime, restTime: restTime).dropLast().flatMap { $0 }
-            
+
         case (1, 1...):
             return multiRoundSet(rounds: rounds, roundTime: roundTime, restTime: restTime).dropLast().flatMap { $0 }
-            
+
         case (2..., 1...):
             return multiLapSet(laps: laps, rounds: rounds, roundTime: roundTime, restTime: restTime).dropLast().flatMap { $0 }
-            
+
         default:
             fatalError(
                 """
@@ -46,6 +51,6 @@ struct WorkoutConfigurator {
             Laps: \(laps) | Rounds: \(rounds)
             """)
         }
-        
+
     }
 }

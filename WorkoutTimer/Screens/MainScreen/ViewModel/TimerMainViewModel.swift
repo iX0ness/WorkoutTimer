@@ -10,7 +10,6 @@ import Foundation
 import RxSwift
 
 protocol TimerMainViewModelInputs {
-    func makeSound(for time: Int)
     func stopTimer()
     func runTimer()
     func pauseTimer()
@@ -29,44 +28,28 @@ class TimerMainViewModel: TimerMainViewModelType,
                           TimerMainViewModelInputs,
                           TimerMainViewModelOutputs {
     
+    let state: PublishSubject<WorkoutState> = PublishSubject()
     
-    var state: PublishSubject<WorkoutState> = PublishSubject()
-    var isWorkoutCompleted: Bool { !workout.isEmpty }
-    var phase: WorkoutPhase { workout.removeLast() }
-    
-    init(workout: Workout, player: SoundPlayable, configurator: WorkoutConfigurator.Type) {
+    init(workout: Workout, player: SoundPlayable, configurator: WorkoutConfigurator) {
         self.player = player
+        self.configurator = configurator
         self.workout = configurator.configureWorkout(
             laps: workout.laps,
             rounds: workout.rounds,
             roundTime: workout.roundTime,
             restTime: workout.restTime)
-        print(self.workout)
         runTimer()
+    }
         
-    }
-    
-    func makeSound(for time: Int) {
-        switch time {
-        case 4...:
-            player.playSound(of: .tick)
-        case 0...3:
-            player.playSound(of: .deepTick)
-        default:
-            break
-        }
-    }
-    
     func runTimer() {
         disposable = timer
-            .takeWhile { _ in !self.workout.isEmpty }
+            .takeWhile { _ in self.isTimeRemaining }
             .map { _ in self.phase }
             .subscribe(onNext: { phase in
+                self.makeSound(for: phase.value)
                 self.state.onNext(.inProgress(phase))
             }, onCompleted: {
                 self.state.onNext(.finished)
-            }, onDisposed: {
-                print("Disposed")
             })
     }
     
@@ -81,14 +64,30 @@ class TimerMainViewModel: TimerMainViewModelType,
     }
     
     private var disposable: Disposable?
-    private let timer = Observable<Int>
-        .interval(RxTimeInterval.seconds(1),
-                  scheduler: MainScheduler.instance)
+    private var isTimeRemaining: Bool { !workout.isEmpty }
+    private var phase: WorkoutPhase { workout.removeLast() }
     private var workout: [WorkoutPhase] = []
     private var player: SoundPlayable
+    private let configurator: WorkoutConfigurator
+    private let timer = Observable<Int>.interval(
+        RxTimeInterval.seconds(1),
+        scheduler: MainScheduler.instance)
     
     var inputs: TimerMainViewModelInputs { return self }
     var outputs: TimerMainViewModelOutputs { return self }
+}
+
+private extension TimerMainViewModel {
+     func makeSound(for time: Int) {
+        switch time {
+        case 4...:
+            player.playSound(of: .tick)
+        case 0...3:
+            player.playSound(of: .deepTick)
+        default:
+            break
+        }
+    }
 }
 
 
