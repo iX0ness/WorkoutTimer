@@ -33,11 +33,7 @@ class TimerMainViewModel: TimerMainViewModelType,
     init(workout: Workout, player: SoundPlayable, configurator: WorkoutConfigurator) {
         self.player = player
         self.configurator = configurator
-        self.workout = configurator.configureWorkout(
-            laps: workout.laps,
-            rounds: workout.rounds,
-            roundTime: workout.roundTime,
-            restTime: workout.restTime)
+        self.workout = configurator.configure(workout)
         runTimer()
     }
         
