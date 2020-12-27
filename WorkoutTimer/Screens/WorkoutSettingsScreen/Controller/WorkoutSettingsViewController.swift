@@ -49,7 +49,7 @@ class WorkoutSettingsViewController: UIViewController, Storyboarded {
         guard let popup = showPopup(
                 title: "Enter rounds",
                 inputType: .single(primaryPlaceholder: "1",
-                                   priparyDescription: "sets"),
+                                   priparyDescription: "rounds"),
                 inputParameter: .sets) else { return }
         handleInput(of: popup)
     }

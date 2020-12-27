@@ -13,7 +13,7 @@ struct WorkoutConfiguration {
     let restTime: Time
     
     @Unit(initialValue: 1, 1...99)
-    var sets: Int
+    var rounds: Int
     
     @Unit(initialValue: 1, 1...99)
     var laps: Int

@@ -94,6 +94,7 @@ private extension TimerMainViewModel {
             break
         }
     }
+    
     func publishWorkoutProgress(for phase: WorkoutPhase) {
         if case let WorkoutPhase.action(timestamp) = phase {
             if timestamp == workout.roundTime {

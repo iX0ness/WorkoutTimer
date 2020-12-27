@@ -22,9 +22,9 @@ class TimerMainViewController: UIViewController, Storyboarded {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = ColorPalette.running.color
+        navigationController?.isNavigationBarHidden = true
         setupTimeView()
         bindState()
-        navigationController?.isNavigationBarHidden = true
     }
     
     @IBAction func controllWorkoutFlow(_ sender: UIButton) {
