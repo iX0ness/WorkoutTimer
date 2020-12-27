@@ -9,7 +9,7 @@
 import Foundation
 
 enum WorkoutState {
-    case inProgress(WorkoutPhase)
+    case inProgress((WorkoutPhase, RoundProgress, LapProgress))
     case paused
     case finished
 }
@@ -18,7 +18,7 @@ enum WorkoutPhase {
     case action(Int)
     case rest(Int)
     
-    var value: Int {
+    var timestamp: Int {
         switch self {
         case .action(let value):
             return value

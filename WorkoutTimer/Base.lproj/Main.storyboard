@@ -75,6 +75,23 @@
                                     <constraint firstItem="4uw-KH-CpO" firstAttribute="leading" secondItem="CJP-99-2Kj" secondAttribute="trailing" constant="25" id="uIi-Es-ceO"/>
                                 </constraints>
                             </view>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="Iln-ap-8Ab">
+                                <rect key="frame" x="164.5" y="92" width="85" height="76"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Round:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bjW-uk-1KK">
+                                        <rect key="frame" x="0.0" y="0.0" width="85" height="33.5"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lap:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i9t-yO-MJa">
+                                        <rect key="frame" x="22" y="49.5" width="41" height="26.5"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <constraints>
@@ -82,14 +99,18 @@
                             <constraint firstItem="EXK-mu-v0P" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="9OR-RD-k5s"/>
                             <constraint firstItem="EXK-mu-v0P" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="PJ6-Ia-Wk4"/>
                             <constraint firstItem="pes-2l-lKc" firstAttribute="top" secondItem="Adf-q5-d1Y" secondAttribute="bottom" constant="50" id="PJu-k8-Gfx"/>
+                            <constraint firstItem="Iln-ap-8Ab" firstAttribute="bottom" secondItem="Adf-q5-d1Y" secondAttribute="top" constant="-30" id="QPK-yb-qw0"/>
                             <constraint firstItem="Adf-q5-d1Y" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="-150" id="XGN-Nl-X84"/>
                             <constraint firstItem="pes-2l-lKc" firstAttribute="centerX" secondItem="Adf-q5-d1Y" secondAttribute="centerX" id="dcf-5F-SaZ"/>
                             <constraint firstItem="EXK-mu-v0P" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="pFg-4G-cIi"/>
                             <constraint firstItem="Adf-q5-d1Y" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="shf-Ou-FIi"/>
+                            <constraint firstItem="Iln-ap-8Ab" firstAttribute="centerX" secondItem="Adf-q5-d1Y" secondAttribute="centerX" id="zEZ-Iy-PF9"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="flowControlButton" destination="CJP-99-2Kj" id="YxJ-Hw-NPd"/>
+                        <outlet property="lapProgressLabel" destination="i9t-yO-MJa" id="24m-mS-Y0O"/>
+                        <outlet property="roundProgressLabel" destination="bjW-uk-1KK" id="oKA-W6-eUJ"/>
                         <outlet property="timeLabel" destination="y8C-hz-Wmj" id="0Wk-VJ-JHn"/>
                         <outlet property="timeView" destination="Adf-q5-d1Y" id="c9e-Zt-Zb3"/>
                     </connections>

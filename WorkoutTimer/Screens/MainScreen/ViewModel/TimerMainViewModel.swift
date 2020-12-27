@@ -9,6 +9,9 @@
 import Foundation
 import RxSwift
 
+typealias RoundProgress = (currentRound: Int, total: Int)
+typealias LapProgress = (currentLap: Int, total: Int)
+
 protocol TimerMainViewModelInputs {
     func stopTimer()
     func runTimer()
@@ -43,8 +46,7 @@ class TimerMainViewModel: TimerMainViewModelType,
             .takeWhile { _ in self.isTimeRemaining }
             .map { _ in self.phase }
             .subscribe(onNext: { phase in
-                self.makeSound(for: phase.value)
-                self.state.onNext(.inProgress(phase))
+                self.makeSound(for: phase.timestamp)
                 self.publishWorkoutProgress(for: phase)
             }, onCompleted: {
                 self.state.onNext(.finished)
@@ -100,8 +102,9 @@ private extension TimerMainViewModel {
                 currentRound += 1
             }
         }
-        
-        
+        let roundProgress = RoundProgress(currentRound, workout.rounds)
+        let lapProgress = LapProgress(currentLap, workout.laps)
+        state.onNext(.inProgress((phase, roundProgress, lapProgress)))
     }
 }
 
