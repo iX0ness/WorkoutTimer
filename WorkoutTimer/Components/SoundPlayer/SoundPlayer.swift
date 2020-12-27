@@ -32,14 +32,17 @@ struct SoundPlayer: SoundPlayable {
 enum SoundType {
     case tick
     case deepTick
+    case finish
     
     var path: String {
         switch self {
         case .tick: return tickFileName
         case .deepTick: return deepTickFileName
+        case .finish: return finishSoundFileName
         }
     }
 
     private var tickFileName: String { "tick.mp3" }
     private var deepTickFileName: String { "deepTick.mp3" }
+    private var finishSoundFileName: String { "finishSound.mp3"}
 }

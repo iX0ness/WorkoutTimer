@@ -84,10 +84,12 @@ class TimerMainViewModel: TimerMainViewModelType,
 private extension TimerMainViewModel {
     func makeSound(for time: Int) {
         switch time {
+        case 0:
+            player.playSound(of: .finish)
+        case 1...3:
+            player.playSound(of: .deepTick)
         case 4...:
             player.playSound(of: .tick)
-        case 0...3:
-            player.playSound(of: .deepTick)
         default:
             break
         }

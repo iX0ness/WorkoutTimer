@@ -16,6 +16,7 @@
 		323B703E24E6E71300108AB2 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 323B703D24E6E71300108AB2 /* MainCoordinator.swift */; };
 		323B704024E6E82500108AB2 /* UIViewController+Storyboarded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 323B703F24E6E82500108AB2 /* UIViewController+Storyboarded.swift */; };
 		3268BD6C24E7F6DF00DD4FA9 /* UIColor+HEX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3268BD6B24E7F6DF00DD4FA9 /* UIColor+HEX.swift */; };
+		520BD9452598E50600659295 /* finishSound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 520BD9442598E50600659295 /* finishSound.mp3 */; };
 		5213A5C725950C7200FB7570 /* WorkoutConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5213A5C625950C7200FB7570 /* WorkoutConfigurator.swift */; };
 		52A15FD1258A47AE00A08898 /* WorkoutState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A15FD0258A47AE00A08898 /* WorkoutState.swift */; };
 		52A521EE258E1C3500FE51B8 /* deepTick.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 52A521EC258E1C3500FE51B8 /* deepTick.mp3 */; };
@@ -46,6 +47,7 @@
 		323B703D24E6E71300108AB2 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		323B703F24E6E82500108AB2 /* UIViewController+Storyboarded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Storyboarded.swift"; sourceTree = "<group>"; };
 		3268BD6B24E7F6DF00DD4FA9 /* UIColor+HEX.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+HEX.swift"; sourceTree = "<group>"; };
+		520BD9442598E50600659295 /* finishSound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = finishSound.mp3; sourceTree = "<group>"; };
 		5213A5C625950C7200FB7570 /* WorkoutConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutConfigurator.swift; sourceTree = "<group>"; };
 		52A15FD0258A47AE00A08898 /* WorkoutState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutState.swift; sourceTree = "<group>"; };
 		52A521EC258E1C3500FE51B8 /* deepTick.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = deepTick.mp3; sourceTree = "<group>"; };
@@ -161,6 +163,7 @@
 		8819E8882562E61400257EBB /* SoundPlayer */ = {
 			isa = PBXGroup;
 			children = (
+				520BD9442598E50600659295 /* finishSound.mp3 */,
 				52A521EC258E1C3500FE51B8 /* deepTick.mp3 */,
 				52A521ED258E1C3500FE51B8 /* tick.mp3 */,
 				52A521F1258E1FC600FE51B8 /* SoundPlayer.swift */,
@@ -351,6 +354,7 @@
 				8BEF532A24E6B4E100220894 /* Assets.xcassets in Resources */,
 				8BEF532824E6B4DF00220894 /* Main.storyboard in Resources */,
 				52A521EE258E1C3500FE51B8 /* deepTick.mp3 in Resources */,
+				520BD9452598E50600659295 /* finishSound.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
