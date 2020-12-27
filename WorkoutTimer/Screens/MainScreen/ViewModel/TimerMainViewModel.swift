@@ -33,10 +33,11 @@ class TimerMainViewModel: TimerMainViewModelType,
     init(workout: Workout, player: SoundPlayable, configurator: WorkoutConfigurator) {
         self.player = player
         self.configurator = configurator
-        self.workout = configurator.configure(workout)
+        self.workout = workout
+        self.workoutFlow = configurator.configure(workout)
         runTimer()
     }
-        
+    
     func runTimer() {
         disposable = timer
             .takeWhile { _ in self.isTimeRemaining }
@@ -44,6 +45,7 @@ class TimerMainViewModel: TimerMainViewModelType,
             .subscribe(onNext: { phase in
                 self.makeSound(for: phase.value)
                 self.state.onNext(.inProgress(phase))
+                self.publishWorkoutProgress(for: phase)
             }, onCompleted: {
                 self.state.onNext(.finished)
             })
@@ -59,12 +61,16 @@ class TimerMainViewModel: TimerMainViewModelType,
         state.onNext(.finished)
     }
     
-    private var disposable: Disposable?
-    private var isTimeRemaining: Bool { !workout.isEmpty }
-    private var phase: WorkoutPhase { workout.removeLast() }
-    private var workout: [WorkoutPhase] = []
+    private var workoutFlow: [WorkoutPhase] = []
     private var player: SoundPlayable
     private let configurator: WorkoutConfigurator
+    private let workout: Workout
+    
+    private var currentRound = 0
+    private var currentLap = 1
+    private var disposable: Disposable?
+    private var isTimeRemaining: Bool { !workoutFlow.isEmpty }
+    private var phase: WorkoutPhase { workoutFlow.removeLast() }
     private let timer = Observable<Int>.interval(
         RxTimeInterval.seconds(1),
         scheduler: MainScheduler.instance)
@@ -74,7 +80,7 @@ class TimerMainViewModel: TimerMainViewModelType,
 }
 
 private extension TimerMainViewModel {
-     func makeSound(for time: Int) {
+    func makeSound(for time: Int) {
         switch time {
         case 4...:
             player.playSound(of: .tick)
@@ -83,6 +89,19 @@ private extension TimerMainViewModel {
         default:
             break
         }
+    }
+    func publishWorkoutProgress(for phase: WorkoutPhase) {
+        if case let WorkoutPhase.action(timestamp) = phase {
+            if timestamp == workout.roundTime {
+                if currentRound == workout.rounds {
+                    currentRound = 0
+                    currentLap += 1
+                }
+                currentRound += 1
+            }
+        }
+        
+        
     }
 }
 
